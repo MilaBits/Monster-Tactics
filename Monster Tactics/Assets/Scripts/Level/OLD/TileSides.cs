@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Level
+namespace Level.OLD
 {
     public class TileSides : MonoBehaviour
     {

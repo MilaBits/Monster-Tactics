@@ -1,7 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Level
+namespace Level.OLD
 {
     [CreateAssetMenu]
     public class TileData : ScriptableObject

@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
-public class Unselectable : MonoBehaviour
+namespace Utilities
 {
+    public class Unselectable : MonoBehaviour
+    {
+    }
 }

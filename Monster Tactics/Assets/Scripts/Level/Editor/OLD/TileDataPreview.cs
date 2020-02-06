@@ -1,8 +1,8 @@
-﻿using Sirenix.Utilities.Editor;
+﻿using Level.OLD;
 using UnityEditor;
 using UnityEngine;
 
-namespace Level.Editor
+namespace Level.Editor.OLD
 {
     [CustomPreview(typeof(TileData))]
     public class TileDataPreview : ObjectPreview

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Policy;
+using Level.OLD;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace Level.Editor
 {
-    public class LevelEditor : OdinEditorWindow
+    public class QuadLevelEditor : OdinEditorWindow
     {
         [FoldoutGroup("Create New Brush"), SerializeField, AssetList(Path = "/Sprites/Tiles/"),
          PreviewField(ObjectFieldAlignment.Center)]
@@ -22,14 +23,14 @@ namespace Level.Editor
         private string brushName = default;
 
         [SerializeField, AssetList, InlineEditor]
-        private TileData brush = default;
+        private QuadTileData brush = default;
 
         [HorizontalGroup("EditSplit"), BoxGroup("EditSplit/Mode")]
         [SerializeField, EnumToggleButtons, HideLabel]
         private LevelEditMode editMode = LevelEditMode.None;
 
-        private Tile tilePrefab = default;
-        private Tile _selectionTile = default;
+        private QuadTile tilePrefab = default;
+        private QuadTile _selectionTile = default;
 
         [Button, BoxGroup("EditSplit/Height"), LabelText("-")]
         private void DecreaseHeight() => height = Mathf.Clamp(height - .5f, 0, 3);
@@ -54,6 +55,22 @@ namespace Level.Editor
         private const KeyCode REM_KEY = KeyCode.C;
         private const KeyCode NON_KEY = KeyCode.V;
 
+        private QuadTileMap tileMap;
+
+        [BoxGroup("Save")]
+        [SerializeField, LabelText("Map Name")]
+        private string SaveName;
+
+        [BoxGroup("Save")]
+        [Button, EnableIf("AllowSave")]
+        private void SaveMap()
+        {
+            LevelData levelData = CreateInstance<LevelData>();
+            levelData.Tiles = tileMap.GetTiles();
+            AssetDatabase.CreateAsset(levelData, $"Assets/Levels/{SaveName}.asset");
+        }
+
+        private bool AllowSave() => !SaveName.IsNullOrWhitespace();
 
         [FoldoutGroup("Create New Brush"), Button, LabelText("Add Brush"), EnableIf("AllowAdd")]
         private void CreateTileBrush()
@@ -66,14 +83,13 @@ namespace Level.Editor
             AssetDatabase.SaveAssets();
         }
 
-
         protected override void OnEnable()
         {
             SceneView.duringSceneGui -= OnSceneGui;
             SceneView.duringSceneGui += OnSceneGui;
 
-            tilePrefab = AssetDatabase.LoadAssetAtPath<Tile>("Assets/Prefabs/Tile.prefab");
-            brush = AssetDatabase.LoadAssetAtPath<TileData>("Assets/tiles/GrassFlat.asset");
+            tilePrefab = AssetDatabase.LoadAssetAtPath<QuadTile>("Assets/Prefabs/QuadTile.prefab");
+            brush = AssetDatabase.LoadAssetAtPath<QuadTileData>("Assets/tiles/Mat/GrassFlat.asset");
 
             _selectionTile = Instantiate(tilePrefab);
             _selectionTile.name = "Level Editor Selection";
@@ -87,16 +103,16 @@ namespace Level.Editor
             SceneView.duringSceneGui -= OnSceneGui;
         }
 
-        [MenuItem("Monster Tactics/Level Editor")]
-        public static void OpenWindow() => GetWindow<LevelEditor>().Show();
+        [MenuItem("Monster Tactics/Quad Level Editor")]
+        public static void OpenWindow() => GetWindow<QuadLevelEditor>().Show();
 
         private void OnSceneGui(SceneView sv)
         {
             DrawControls();
 
-            if (editMode == LevelEditMode.None) return;
+            tileMap = FindObjectOfType<QuadTileMap>();
 
-            TileMap tileMap = FindObjectOfType<TileMap>();
+            if (editMode == LevelEditMode.None) return;
 
             Event e = Event.current;
             // Convert mouse position to world position by finding point where y = 0.
@@ -111,16 +127,16 @@ namespace Level.Editor
             switch (editMode)
             {
                 case LevelEditMode.Add:
-                    _selectionTile.UpdateSprites(brush, ADD_COLOR);
+                    _selectionTile.UpdateMaterials(brush, ADD_COLOR);
                     break;
                 case LevelEditMode.Remove:
-                    _selectionTile.UpdateSprites(brush, REM_COLOR);
+                    _selectionTile.UpdateMaterials(brush, REM_COLOR);
                     break;
                 case LevelEditMode.Replace:
-                    _selectionTile.UpdateSprites(brush, REP_COLOR);
+                    _selectionTile.UpdateMaterials(brush, REP_COLOR);
                     break;
                 case LevelEditMode.None:
-                    _selectionTile.UpdateSprites(brush, INV_COLOR);
+                    _selectionTile.UpdateMaterials(brush, INV_COLOR);
                     break;
             }
 
@@ -150,6 +166,7 @@ namespace Level.Editor
                         editMode = LevelEditMode.Remove;
                         break;
                 }
+
                 Repaint();
             }
 
@@ -160,10 +177,10 @@ namespace Level.Editor
                     switch (editMode)
                     {
                         case LevelEditMode.Add:
-                            Tile newTile = Instantiate(tilePrefab, snappedPosition, tilePrefab.transform.rotation,
+                            QuadTile newTile = Instantiate(tilePrefab, snappedPosition, tilePrefab.transform.rotation,
                                 tileMap.transform);
-                            newTile.UpdateSprites(brush, height);
-                            tileMap.AddTile(snappedPosition, newTile, height);
+                            newTile.Init(brush, height);
+                            tileMap.AddTile(snappedPosition, newTile);
                             break;
                         case LevelEditMode.Remove:
                             tileMap.RemoveTile(snappedPosition);
@@ -188,7 +205,7 @@ namespace Level.Editor
             var rect = EditorGUILayout.BeginHorizontal();
             GUI.Box(rect, GUIContent.none);
             GUILayout.FlexibleSpace();
-            
+
             EditorGUILayout.BeginVertical();
             GUI.color = Color.white;
             GUILayout.Space(5);
@@ -201,7 +218,7 @@ namespace Level.Editor
             GUILayout.Label("Height");
             GUILayout.Space(5);
             EditorGUILayout.EndVertical();
-            
+
             EditorGUILayout.BeginVertical();
             GUILayout.Space(5);
             GUILayout.Label("");

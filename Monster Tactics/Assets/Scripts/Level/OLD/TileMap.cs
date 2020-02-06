@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using Utilities;
 
-namespace Level
+namespace Level.OLD
 {
     [ExecuteInEditMode]
     public class TileMap : SerializedMonoBehaviour

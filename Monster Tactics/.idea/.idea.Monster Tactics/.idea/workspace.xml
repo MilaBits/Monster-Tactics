@@ -13,16 +13,21 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/LevelEditMode.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utilities/Extensions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/Tile.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/TileSides.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/TileData.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/TileMap.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/QuadTile.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/QuadTileMap.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/QuadTileSides.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utilities/Unselectable.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/Editor/TileDataPreview.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/Editor/LevelEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/LevelData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F38C71C8-6AA6-4E29-9D4C-EA9FB7C715E1/3e/b34c5b4c/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/Editor/OLD/LevelEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/Editor/OLD/TileDataPreview.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/QuadTileData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/OLD/Tile.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/43BB9D48-5A6C-4A02-96B4-7F7E78869238/bf/1631e946/OdinEditorWindow.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/OLD/TileData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/59837000-EBF5-4955-A9CB-1D31CAA86097/16/955b92f8/Event.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/Editor/QuadLevelEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/OLD/TileMap.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F38C71C8-6AA6-4E29-9D4C-EA9FB7C715E1/79/c6e10fb0/Color.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -43,8 +48,20 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/TileData.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/Extensions.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/TileMap.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Level/Tile.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/LevelEditor.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/Tile.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileData.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileSides.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/OLD/Tile.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/OLD/TileData.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/OLD/LevelEditor.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/OLD/TileDataPreview.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTile.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/Level.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/OLD/TileMap.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileMap.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/QuadLevelEditor.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/LevelData.cs" />
       </list>
     </option>
   </component>
@@ -58,6 +75,7 @@
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
     <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -72,10 +90,10 @@
       <option name="pid" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="11212">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="11212" />
+      <option name="pid" />
       <method v="2" />
     </configuration>
   </component>
@@ -165,6 +183,10 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state width="1877" height="351" key="GridCell.Tab.3.right/0.30.1920.1050/-1920.30.1920.1050@0.30.1920.1050" timestamp="1580914826109" />
+    <state x="-1297" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1580948629348">
+      <screen x="-1920" y="30" width="1920" height="1050" />
+    </state>
+    <state x="-1297" y="257" width="672" height="678" key="search.everywhere.popup/0.30.1920.1050/-1920.30.1920.1050@-1920.30.1920.1050" timestamp="1580948629348" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
