@@ -51,17 +51,17 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/LevelEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Tile.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileData.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileSides.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/OLD/Tile.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/OLD/TileData.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/OLD/LevelEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/OLD/TileDataPreview.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTile.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Level.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/OLD/TileMap.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileMap.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/QuadLevelEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/LevelData.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTile.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/QuadLevelEditor.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileSides.cs" />
       </list>
     </option>
   </component>
@@ -183,10 +183,11 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state width="1877" height="351" key="GridCell.Tab.3.right/0.30.1920.1050/-1920.30.1920.1050@0.30.1920.1050" timestamp="1580914826109" />
-    <state x="-1297" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1580948629348">
-      <screen x="-1920" y="30" width="1920" height="1050" />
+    <state x="623" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1581073879175">
+      <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="-1297" y="257" width="672" height="678" key="search.everywhere.popup/0.30.1920.1050/-1920.30.1920.1050@-1920.30.1920.1050" timestamp="1580948629348" />
+    <state x="623" y="257" width="672" height="678" key="search.everywhere.popup/0.30.1920.1050/-1920.30.1920.1050@0.30.1920.1050" timestamp="1581073879175" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

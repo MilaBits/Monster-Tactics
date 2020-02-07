@@ -113,7 +113,7 @@ namespace Level.Editor.OLD
                 case LevelEditMode.Add:
                     _selectionTile.UpdateSprites(brush, ADD_COLOR);
                     break;
-                case LevelEditMode.Remove:
+                case LevelEditMode.Delete:
                     _selectionTile.UpdateSprites(brush, REM_COLOR);
                     break;
                 case LevelEditMode.Replace:
@@ -147,7 +147,7 @@ namespace Level.Editor.OLD
                         editMode = LevelEditMode.Replace;
                         break;
                     case REM_KEY:
-                        editMode = LevelEditMode.Remove;
+                        editMode = LevelEditMode.Delete;
                         break;
                 }
                 Repaint();
@@ -165,7 +165,7 @@ namespace Level.Editor.OLD
                             newTile.UpdateSprites(brush, height);
                             tileMap.AddTile(snappedPosition, newTile, height);
                             break;
-                        case LevelEditMode.Remove:
+                        case LevelEditMode.Delete:
                             tileMap.RemoveTile(snappedPosition);
                             break;
                         case LevelEditMode.Replace:

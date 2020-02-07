@@ -1,67 +1,76 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Policy;
 using Level.OLD;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
+using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEngine;
+using ObjectFieldAlignment = Sirenix.OdinInspector.ObjectFieldAlignment;
 
 namespace Level.Editor
 {
     public class QuadLevelEditor : OdinEditorWindow
     {
-        [FoldoutGroup("Create New Brush"), SerializeField, AssetList(Path = "/Sprites/Tiles/"),
+        [FoldoutGroup("Create New Brush"), SerializeField, AssetList(Path = "/Textures/Tiles/"),
          PreviewField(ObjectFieldAlignment.Center)]
-        private Sprite top = default;
+        private Texture top = default;
 
-        [FoldoutGroup("Create New Brush"), SerializeField, AssetList(Path = "/Sprites/Tiles/"),
+        [FoldoutGroup("Create New Brush"), SerializeField, AssetList(Path = "/Textures/Tiles/"),
          PreviewField(ObjectFieldAlignment.Center)]
-        private Sprite side = default;
+        private Texture side = default;
 
         [FoldoutGroup("Create New Brush"), SerializeField]
         private string brushName = default;
 
-        [SerializeField, AssetList, InlineEditor]
+        [SerializeField, AssetList]
         private QuadTileData brush = default;
 
-        [HorizontalGroup("EditSplit"), BoxGroup("EditSplit/Mode")]
+        [FoldoutGroup("$EditModeString")]
         [SerializeField, EnumToggleButtons, HideLabel]
         private LevelEditMode editMode = LevelEditMode.None;
 
+        private LevelEditMode oldMode;
+
         private QuadTile tilePrefab = default;
+        private QuadTile ghostPrefab = default;
         private QuadTile _selectionTile = default;
 
-        [Button, BoxGroup("EditSplit/Height"), LabelText("-")]
+        private string EditModeString() => $"Mode - {editMode.ToString()}";
+        private string HeightString() => $"Height - {height}";
+
+        [Button, FoldoutGroup("$HeightString"), LabelText("-")]
         private void DecreaseHeight() => height = Mathf.Clamp(height - .5f, 0, 3);
 
-        [SerializeField, BoxGroup("EditSplit/Height"), OnValueChanged("RoundHalf"), HideLabel]
+        [SerializeField, FoldoutGroup("$HeightString"), OnValueChanged("RoundHalf"), HideLabel]
         private float height = 0;
 
-        [Button, BoxGroup("EditSplit/Height"), LabelText("+")]
+        [Button, FoldoutGroup("$HeightString"), LabelText("+")]
         private void IncreaseHeight() => height = Mathf.Clamp(height + .5f, 0, 3);
 
         private void RoundHalf() => height = (float) Math.Round(height * 2, MidpointRounding.AwayFromZero) / 2;
 
         private bool AllowAdd() => top != null && side != null && !brushName.IsNullOrWhitespace();
 
-        private readonly Color ADD_COLOR = new Color(1, 1, 0, .5f);
-        private readonly Color REP_COLOR = new Color(0, 0, 1, .5f);
+        private readonly Color ADD_COLOR = new Color(0, 1, 0, .5f);
+        private readonly Color REP_COLOR = new Color(1, 1, 0, .5f);
         private readonly Color REM_COLOR = new Color(1, 0, 0, .5f);
         private readonly Color INV_COLOR = new Color(1, 1, 1, 0);
 
-        private const KeyCode ADD_KEY = KeyCode.Z;
-        private const KeyCode REP_KEY = KeyCode.X;
-        private const KeyCode REM_KEY = KeyCode.C;
-        private const KeyCode NON_KEY = KeyCode.V;
+        private const KeyCode ADD_KEY = KeyCode.A;
+        private const KeyCode REP_KEY = KeyCode.S;
+        private const KeyCode REM_KEY = KeyCode.D;
+        private const KeyCode NON_KEY = KeyCode.F;
 
         private QuadTileMap tileMap;
 
-        [BoxGroup("Save")]
+        [FoldoutGroup("Save")]
         [SerializeField, LabelText("Map Name")]
-        private string SaveName;
+        private string SaveName = default;
 
-        [BoxGroup("Save")]
+        [FoldoutGroup("Save")]
         [Button, EnableIf("AllowSave")]
         private void SaveMap()
         {
@@ -72,15 +81,68 @@ namespace Level.Editor
 
         private bool AllowSave() => !SaveName.IsNullOrWhitespace();
 
+        private void ModeChanged()
+        {
+            if (oldMode != editMode)
+            {
+                switch (editMode)
+                {
+                    case LevelEditMode.Add:
+                        _selectionTile.UpdateMaterials(brush, ADD_COLOR);
+                        break;
+                    case LevelEditMode.Delete:
+                        _selectionTile.UpdateMaterials(brush, REM_COLOR);
+                        break;
+                    case LevelEditMode.Replace:
+                        _selectionTile.UpdateMaterials(brush, REP_COLOR);
+                        break;
+                    case LevelEditMode.None:
+                        _selectionTile.UpdateMaterials(brush, INV_COLOR);
+                        break;
+                }
+            }
+
+            oldMode = editMode;
+        }
+
         [FoldoutGroup("Create New Brush"), Button, LabelText("Add Brush"), EnableIf("AllowAdd")]
         private void CreateTileBrush()
         {
-            TileData data = CreateInstance<TileData>();
-            data.top = top;
-            data.sides = side;
+            QuadTileData data = CreateInstance<QuadTileData>();
 
-            AssetDatabase.CreateAsset(data, $"Assets/Tiles/{brushName}.asset");
+            Material topMat = AssetDatabase.LoadAssetAtPath<Material>($"Assets/Materials/Tiles/{top.name}.mat");
+            if (topMat)
+            {
+                data.top = topMat;
+            }
+            else
+            {
+                topMat = new Material(Shader.Find("Universal Render Pipeline/Simple Lit"));
+                topMat.SetTexture("_BaseMap", top);
+                topMat.SetColor("_BaseColor", Color.white);
+                AssetDatabase.CreateAsset(topMat, $"Assets/Materials/Tiles/{top.name}.mat");
+                AssetDatabase.SaveAssets();
+                data.top = AssetDatabase.LoadAssetAtPath<Material>($"Assets/Materials/Tiles/{top.name}.mat");
+            }
+
+            Material sideMat = AssetDatabase.LoadAssetAtPath<Material>($"Assets/Materials/Tiles/{side.name}.mat");
+            if (sideMat)
+            {
+                data.sides = sideMat;
+            }
+            else
+            {
+                sideMat = new Material(Shader.Find("Universal Render Pipeline/Simple Lit"));
+                sideMat.SetTexture("_BaseMap", side);
+                sideMat.SetColor("_BaseColor", Color.white);
+                AssetDatabase.CreateAsset(sideMat, $"Assets/Materials/Tiles/{side.name}.mat");
+                AssetDatabase.SaveAssets();
+                data.sides = AssetDatabase.LoadAssetAtPath<Material>($"Assets/Materials/Tiles/{side.name}.mat");
+            }
+
+            AssetDatabase.CreateAsset(data, $"Assets/Tiles/Mat/{brushName}.asset");
             AssetDatabase.SaveAssets();
+            GUIHelper.RequestRepaint();
         }
 
         protected override void OnEnable()
@@ -89,9 +151,10 @@ namespace Level.Editor
             SceneView.duringSceneGui += OnSceneGui;
 
             tilePrefab = AssetDatabase.LoadAssetAtPath<QuadTile>("Assets/Prefabs/QuadTile.prefab");
-            brush = AssetDatabase.LoadAssetAtPath<QuadTileData>("Assets/tiles/Mat/GrassFlat.asset");
+            ghostPrefab = AssetDatabase.LoadAssetAtPath<QuadTile>("Assets/Prefabs/GhostTile.prefab");
+            brush = AssetDatabase.LoadAssetAtPath<QuadTileData>("Assets/tiles/Mat/GrassLight.asset");
 
-            _selectionTile = Instantiate(tilePrefab);
+            _selectionTile = Instantiate(ghostPrefab);
             _selectionTile.name = "Level Editor Selection";
 
             base.OnEnable();
@@ -112,7 +175,7 @@ namespace Level.Editor
 
             tileMap = FindObjectOfType<QuadTileMap>();
 
-            if (editMode == LevelEditMode.None) return;
+            _selectionTile.gameObject.SetActive(editMode != LevelEditMode.None);
 
             Event e = Event.current;
             // Convert mouse position to world position by finding point where y = 0.
@@ -122,23 +185,9 @@ namespace Level.Editor
 
             // Set ghost tile's position
             _selectionTile.transform.position = snappedPosition;
-            _selectionTile.UpdateHeight(height);
 
-            switch (editMode)
-            {
-                case LevelEditMode.Add:
-                    _selectionTile.UpdateMaterials(brush, ADD_COLOR);
-                    break;
-                case LevelEditMode.Remove:
-                    _selectionTile.UpdateMaterials(brush, REM_COLOR);
-                    break;
-                case LevelEditMode.Replace:
-                    _selectionTile.UpdateMaterials(brush, REP_COLOR);
-                    break;
-                case LevelEditMode.None:
-                    _selectionTile.UpdateMaterials(brush, INV_COLOR);
-                    break;
-            }
+            _selectionTile.UpdateHeight(height);
+            ModeChanged();
 
             int controlId = GUIUtility.GetControlID(FocusType.Passive);
 
@@ -149,7 +198,7 @@ namespace Level.Editor
                 e.Use();
             }
 
-            if (e.GetTypeForControl(controlId) == EventType.KeyDown)
+            if (e.GetTypeForControl(controlId) == EventType.KeyDown && e.control)
             {
                 switch (e.keyCode)
                 {
@@ -163,10 +212,11 @@ namespace Level.Editor
                         editMode = LevelEditMode.Replace;
                         break;
                     case REM_KEY:
-                        editMode = LevelEditMode.Remove;
+                        editMode = LevelEditMode.Delete;
                         break;
                 }
 
+                e.Use();
                 Repaint();
             }
 
@@ -182,8 +232,8 @@ namespace Level.Editor
                             newTile.Init(brush, height);
                             tileMap.AddTile(snappedPosition, newTile);
                             break;
-                        case LevelEditMode.Remove:
-                            tileMap.RemoveTile(snappedPosition);
+                        case LevelEditMode.Delete:
+                            tileMap.DeleteTile(snappedPosition);
                             break;
                         case LevelEditMode.Replace:
                             tileMap.ReplaceTile(snappedPosition, brush, height);
@@ -213,7 +263,7 @@ namespace Level.Editor
             GUILayout.Space(5);
             GUILayout.Label("Add");
             GUILayout.Label("Replace");
-            GUILayout.Label("Remove");
+            GUILayout.Label("Delete");
             GUILayout.Space(5);
             GUILayout.Label("Height");
             GUILayout.Space(5);
@@ -223,9 +273,9 @@ namespace Level.Editor
             GUILayout.Space(5);
             GUILayout.Label("");
             GUILayout.Space(5);
-            GUILayout.Label(ADD_KEY.ToString());
-            GUILayout.Label(REP_KEY.ToString());
-            GUILayout.Label(REM_KEY.ToString());
+            GUILayout.Label("Ctrl + " + ADD_KEY);
+            GUILayout.Label("Ctrl + " + REP_KEY);
+            GUILayout.Label("Ctrl + " + REM_KEY);
             GUILayout.Space(5);
             GUILayout.Label("Ctrl + Scroll");
             GUILayout.Space(5);

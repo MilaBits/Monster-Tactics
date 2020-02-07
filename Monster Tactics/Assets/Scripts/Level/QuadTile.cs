@@ -32,14 +32,14 @@ namespace Level
         {
             tileData = data;
             top.material = data.top;
-            top.sharedMaterial.color = Color.white;
+            top.material.color = Color.white;
             sideLayers.ForEach(x => x.SetMaterials(data.sides, Color.white));
         }
 
         public void UpdateMaterials(QuadTileData data, Color color)
         {
-            top.material = data.top;
-            top.sharedMaterial.color = color;
+            top.material.SetTexture("_BaseMap", data.top.GetTexture("_BaseMap"));
+            top.material.SetColor("_BaseColor", color);
             sideLayers.ForEach(x => x.SetMaterials(data.sides, color));
         }
 
