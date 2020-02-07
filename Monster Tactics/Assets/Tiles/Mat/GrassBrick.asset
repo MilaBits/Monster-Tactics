@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26d579b268c248d4a9343dcd330b04ea, type: 3}
   m_Name: GrassBrick
   m_EditorClassIdentifier: 
-  top: {fileID: 2100000, guid: 9e1015cf98d07b94f9df7fc9beb0b062, type: 2}
+  top: {fileID: 2100000, guid: 48e6a87b5a3ed3c469f740389e4f6b31, type: 2}
   sides: {fileID: 2100000, guid: 1f6d25ce66dc03e4898328f86701d6a9, type: 2}
   difficulty: 1
