@@ -11,8 +11,8 @@ namespace Level
         {
             for (int i = 0; i < sides.Length; i++)
             {
-                sides[i].material = material;
-                sides[i].sharedMaterial.color = color;
+                sides[i].material.SetTexture("_BaseMap", material.GetTexture("_BaseMap"));
+                sides[i].material.SetColor("_BaseColor", color);
             }
         }
     }

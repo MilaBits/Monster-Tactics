@@ -3,7 +3,7 @@
     public enum LevelEditMode
     {
         Add,
-        Remove,
+        Delete,
         Replace,
         None
     }

@@ -26,7 +26,7 @@ namespace Level
             Level.Add(position.ToVector2IntXZ(), newTile);
         }
 
-        public void RemoveTile(Vector3 position)
+        public void DeleteTile(Vector3 position)
         {
             if (Level.ContainsKey(position.ToVector2IntXZ()))
             {
