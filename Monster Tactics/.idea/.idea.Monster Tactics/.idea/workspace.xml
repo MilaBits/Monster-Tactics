@@ -19,15 +19,10 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utilities/Unselectable.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/LevelData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F38C71C8-6AA6-4E29-9D4C-EA9FB7C715E1/3e/b34c5b4c/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/Editor/OLD/LevelEditor.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/Editor/OLD/TileDataPreview.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/QuadTileData.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/OLD/Tile.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/43BB9D48-5A6C-4A02-96B4-7F7E78869238/bf/1631e946/OdinEditorWindow.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/OLD/TileData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/59837000-EBF5-4955-A9CB-1D31CAA86097/16/955b92f8/Event.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/Editor/QuadLevelEditor.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/OLD/TileMap.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F38C71C8-6AA6-4E29-9D4C-EA9FB7C715E1/79/c6e10fb0/Color.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -43,25 +38,25 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/SceneInteractingWindow.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/TileUtilities.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/Unselectable.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Level/LevelEditMode.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/TileDataPreview.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/TileData.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/Extensions.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/TileMap.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/LevelEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Tile.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileData.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/OLD/Tile.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/OLD/TileData.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/OLD/LevelEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/OLD/TileDataPreview.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Level.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/OLD/TileMap.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileMap.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/LevelData.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTile.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/QuadLevelEditor.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/LevelEditMode.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/OLD/LevelEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileSides.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTile.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/Extensions.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileMap.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/QuadLevelEditor.cs" />
       </list>
     </option>
   </component>

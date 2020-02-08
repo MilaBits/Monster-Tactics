@@ -28,19 +28,20 @@ namespace Level
             UpdateMaterials(tileData);
         }
 
+        public QuadTileData Data() => tileData;
+
         private void UpdateMaterials(QuadTileData data)
         {
             tileData = data;
-            top.material = data.top;
-            top.material.color = Color.white;
-            sideLayers.ForEach(x => x.SetMaterials(data.sides, Color.white));
+            top.sharedMaterial = data.top;
+            sideLayers.ForEach(x => x.SetMaterials(data.sides));
         }
 
-        public void UpdateMaterials(QuadTileData data, Color color)
+        public void UpdateSelectionMaterials(QuadTileData data, Color color)
         {
-            top.material.SetTexture("_BaseMap", data.top.GetTexture("_BaseMap"));
-            top.material.SetColor("_BaseColor", color);
-            sideLayers.ForEach(x => x.SetMaterials(data.sides, color));
+            top.sharedMaterial.SetTexture("_BaseMap", data.top.GetTexture("_BaseMap"));
+            top.sharedMaterial.SetColor("_BaseColor", color);
+            sideLayers.ForEach(x => x.SetSelectionMaterial(data.sides, color));
         }
 
         public void UpdateHeight(float value)

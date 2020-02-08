@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Policy;
-using Level.OLD;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
 using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEngine;
+using Utilities;
 using ObjectFieldAlignment = Sirenix.OdinInspector.ObjectFieldAlignment;
 
 namespace Level.Editor
@@ -35,36 +34,41 @@ namespace Level.Editor
         private LevelEditMode oldMode;
 
         private QuadTile tilePrefab = default;
-        private QuadTile ghostPrefab = default;
+        private QuadTile selectionPrefab = default;
         private QuadTile _selectionTile = default;
 
-        private string EditModeString() => $"Mode - {editMode.ToString()}";
-        private string HeightString() => $"Height - {height}";
+        private const float maxHeight = 5f;
+        private const float minHeight = .5f;
 
         [Button, FoldoutGroup("$HeightString"), LabelText("-")]
-        private void DecreaseHeight() => height = Mathf.Clamp(height - .5f, 0, 3);
+        private void DecreaseHeight() => height = Mathf.Clamp(height - minHeight, 0, maxHeight);
 
         [SerializeField, FoldoutGroup("$HeightString"), OnValueChanged("RoundHalf"), HideLabel]
         private float height = 0;
 
         [Button, FoldoutGroup("$HeightString"), LabelText("+")]
-        private void IncreaseHeight() => height = Mathf.Clamp(height + .5f, 0, 3);
+        private void IncreaseHeight() => height = Mathf.Clamp(height + minHeight, 0, maxHeight);
 
+        private string EditModeString() => $"Mode - {editMode.ToString()}";
+        private string HeightString() => $"Height - {height}";
         private void RoundHalf() => height = (float) Math.Round(height * 2, MidpointRounding.AwayFromZero) / 2;
-
         private bool AllowAdd() => top != null && side != null && !brushName.IsNullOrWhitespace();
+        private bool AllowSave() => !SaveName.IsNullOrWhitespace();
 
         private readonly Color ADD_COLOR = new Color(0, 1, 0, .5f);
-        private readonly Color REP_COLOR = new Color(1, 1, 0, .5f);
         private readonly Color REM_COLOR = new Color(1, 0, 0, .5f);
         private readonly Color INV_COLOR = new Color(1, 1, 1, 0);
 
         private const KeyCode ADD_KEY = KeyCode.A;
-        private const KeyCode REP_KEY = KeyCode.S;
         private const KeyCode REM_KEY = KeyCode.D;
         private const KeyCode NON_KEY = KeyCode.F;
 
+        private LayerMask ignoreLayer;
+        private LayerMask defaultLayer;
+
         private QuadTileMap tileMap;
+
+        private Vector3 lastSnappedPosition;
 
         [FoldoutGroup("Save")]
         [SerializeField, LabelText("Map Name")]
@@ -79,7 +83,112 @@ namespace Level.Editor
             AssetDatabase.CreateAsset(levelData, $"Assets/Levels/{SaveName}.asset");
         }
 
-        private bool AllowSave() => !SaveName.IsNullOrWhitespace();
+
+        protected override void OnEnable()
+        {
+            SceneView.duringSceneGui -= OnSceneGui;
+            SceneView.duringSceneGui += OnSceneGui;
+
+            ignoreLayer = LayerMask.NameToLayer("Ignore Editor");
+            defaultLayer = LayerMask.NameToLayer("Default");
+
+            tilePrefab = AssetDatabase.LoadAssetAtPath<QuadTile>("Assets/Prefabs/QuadTile.prefab");
+            selectionPrefab = AssetDatabase.LoadAssetAtPath<QuadTile>("Assets/Prefabs/Editor/SelectionTile.prefab");
+            brush = AssetDatabase.LoadAssetAtPath<QuadTileData>("Assets/tiles/Mat/GrassLight.asset");
+
+            _selectionTile = Instantiate(selectionPrefab);
+
+            _selectionTile.name = "SelectionMarker";
+
+            base.OnEnable();
+        }
+
+        protected void OnDisable()
+        {
+            DestroyImmediate(_selectionTile.gameObject);
+            SceneView.duringSceneGui -= OnSceneGui;
+
+            ChangeTilemapLayer(defaultLayer);
+        }
+
+        private void ChangeTilemapLayer(LayerMask layer)
+        {
+            foreach (KeyValuePair<Vector2Int, QuadTile> quadTile in tileMap.GetTiles())
+            {
+                quadTile.Value.gameObject.SetLayerRecursively(layer);
+            }
+        }
+
+        [MenuItem("Monster Tactics/Quad Level Editor")]
+        public static void OpenWindow() => GetWindow<QuadLevelEditor>().Show();
+
+        private void OnSceneGui(SceneView sv)
+        {
+            DrawControls();
+
+            tileMap = FindObjectOfType<QuadTileMap>();
+
+            _selectionTile.gameObject.SetActive(editMode != LevelEditMode.None);
+
+            Event e = Event.current;
+            // Convert mouse position to world position by finding point where y = 0.
+            Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
+            Vector3 pos = ray.origin - (ray.origin.y / ray.direction.y) * ray.direction;
+            Vector3 snappedPosition = QuadTileMap.GetPositionClosestTo(pos);
+
+            _selectionTile.transform.position = snappedPosition;
+
+            _selectionTile.UpdateHeight(height);
+            ModeChanged();
+
+            int controlId = GUIUtility.GetControlID(FocusType.Passive);
+
+            if (e.GetTypeForControl(controlId) == EventType.ScrollWheel && e.control)
+            {
+                if (e.delta.y > 0) DecreaseHeight();
+                else if (e.delta.y < 0) IncreaseHeight();
+                e.Use();
+            }
+
+            if (e.GetTypeForControl(controlId) == EventType.KeyDown && e.control)
+            {
+                switch (e.keyCode)
+                {
+                    case NON_KEY:
+                        editMode = LevelEditMode.None;
+                        break;
+                    case ADD_KEY:
+                        editMode = LevelEditMode.Add;
+                        break;
+                    case REM_KEY:
+                        editMode = LevelEditMode.Delete;
+                        break;
+                }
+
+                e.Use();
+                Repaint();
+            }
+
+            if (e.GetTypeForControl(controlId) == EventType.MouseDown)
+            {
+                if (e.button == 0)
+                {
+                    switch (editMode)
+                    {
+                        case LevelEditMode.Add:
+                            tileMap.AddTile(snappedPosition, brush, height);
+                            break;
+                        case LevelEditMode.Delete:
+                            tileMap.DeleteTile(snappedPosition);
+                            break;
+                        case LevelEditMode.None:
+                            return;
+                    }
+                }
+            }
+
+            lastSnappedPosition = snappedPosition;
+        }
 
         private void ModeChanged()
         {
@@ -88,16 +197,16 @@ namespace Level.Editor
                 switch (editMode)
                 {
                     case LevelEditMode.Add:
-                        _selectionTile.UpdateMaterials(brush, ADD_COLOR);
+                        _selectionTile.UpdateSelectionMaterials(brush, ADD_COLOR);
+                        ChangeTilemapLayer(ignoreLayer);
                         break;
                     case LevelEditMode.Delete:
-                        _selectionTile.UpdateMaterials(brush, REM_COLOR);
-                        break;
-                    case LevelEditMode.Replace:
-                        _selectionTile.UpdateMaterials(brush, REP_COLOR);
+                        _selectionTile.UpdateSelectionMaterials(brush, REM_COLOR);
+                        ChangeTilemapLayer(ignoreLayer);
                         break;
                     case LevelEditMode.None:
-                        _selectionTile.UpdateMaterials(brush, INV_COLOR);
+                        _selectionTile.UpdateSelectionMaterials(brush, INV_COLOR);
+                        ChangeTilemapLayer(defaultLayer);
                         break;
                 }
             }
@@ -145,108 +254,6 @@ namespace Level.Editor
             GUIHelper.RequestRepaint();
         }
 
-        protected override void OnEnable()
-        {
-            SceneView.duringSceneGui -= OnSceneGui;
-            SceneView.duringSceneGui += OnSceneGui;
-
-            tilePrefab = AssetDatabase.LoadAssetAtPath<QuadTile>("Assets/Prefabs/QuadTile.prefab");
-            ghostPrefab = AssetDatabase.LoadAssetAtPath<QuadTile>("Assets/Prefabs/GhostTile.prefab");
-            brush = AssetDatabase.LoadAssetAtPath<QuadTileData>("Assets/tiles/Mat/GrassLight.asset");
-
-            _selectionTile = Instantiate(ghostPrefab);
-            _selectionTile.name = "Level Editor Selection";
-
-            base.OnEnable();
-        }
-
-        protected void OnDisable()
-        {
-            DestroyImmediate(_selectionTile.gameObject);
-            SceneView.duringSceneGui -= OnSceneGui;
-        }
-
-        [MenuItem("Monster Tactics/Quad Level Editor")]
-        public static void OpenWindow() => GetWindow<QuadLevelEditor>().Show();
-
-        private void OnSceneGui(SceneView sv)
-        {
-            DrawControls();
-
-            tileMap = FindObjectOfType<QuadTileMap>();
-
-            _selectionTile.gameObject.SetActive(editMode != LevelEditMode.None);
-
-            Event e = Event.current;
-            // Convert mouse position to world position by finding point where y = 0.
-            Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
-            Vector3 pos = ray.origin - (ray.origin.y / ray.direction.y) * ray.direction;
-            Vector3 snappedPosition = tileMap.GetPositionClosestTo(pos);
-
-            // Set ghost tile's position
-            _selectionTile.transform.position = snappedPosition;
-
-            _selectionTile.UpdateHeight(height);
-            ModeChanged();
-
-            int controlId = GUIUtility.GetControlID(FocusType.Passive);
-
-            if (e.GetTypeForControl(controlId) == EventType.ScrollWheel && e.control)
-            {
-                if (e.delta.y > 0) DecreaseHeight();
-                else if (e.delta.y < 0) IncreaseHeight();
-                e.Use();
-            }
-
-            if (e.GetTypeForControl(controlId) == EventType.KeyDown && e.control)
-            {
-                switch (e.keyCode)
-                {
-                    case NON_KEY:
-                        editMode = LevelEditMode.None;
-                        break;
-                    case ADD_KEY:
-                        editMode = LevelEditMode.Add;
-                        break;
-                    case REP_KEY:
-                        editMode = LevelEditMode.Replace;
-                        break;
-                    case REM_KEY:
-                        editMode = LevelEditMode.Delete;
-                        break;
-                }
-
-                e.Use();
-                Repaint();
-            }
-
-            if (e.GetTypeForControl(controlId) == EventType.MouseDown)
-            {
-                if (e.button == 0)
-                {
-                    switch (editMode)
-                    {
-                        case LevelEditMode.Add:
-                            QuadTile newTile = Instantiate(tilePrefab, snappedPosition, tilePrefab.transform.rotation,
-                                tileMap.transform);
-                            newTile.Init(brush, height);
-                            tileMap.AddTile(snappedPosition, newTile);
-                            break;
-                        case LevelEditMode.Delete:
-                            tileMap.DeleteTile(snappedPosition);
-                            break;
-                        case LevelEditMode.Replace:
-                            tileMap.ReplaceTile(snappedPosition, brush, height);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-
-                    e.Use();
-                }
-            }
-        }
-
         private void DrawControls()
         {
             Handles.BeginGUI();
@@ -262,7 +269,6 @@ namespace Level.Editor
             GUILayout.Label("Hotkeys");
             GUILayout.Space(5);
             GUILayout.Label("Add");
-            GUILayout.Label("Replace");
             GUILayout.Label("Delete");
             GUILayout.Space(5);
             GUILayout.Label("Height");
@@ -274,7 +280,6 @@ namespace Level.Editor
             GUILayout.Label("");
             GUILayout.Space(5);
             GUILayout.Label("Ctrl + " + ADD_KEY);
-            GUILayout.Label("Ctrl + " + REP_KEY);
             GUILayout.Label("Ctrl + " + REM_KEY);
             GUILayout.Space(5);
             GUILayout.Label("Ctrl + Scroll");

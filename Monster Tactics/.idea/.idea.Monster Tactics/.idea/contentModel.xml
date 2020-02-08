@@ -33,20 +33,10 @@
         <e p="Scripts" t="Include">
           <e p="Level" t="Include">
             <e p="Editor" t="Include">
-              <e p="OLD" t="Include">
-                <e p="LevelEditor.cs" t="Include" />
-                <e p="TileDataPreview.cs" t="Include" />
-              </e>
               <e p="QuadLevelEditor.cs" t="Include" />
             </e>
             <e p="LevelData.cs" t="Include" />
             <e p="LevelEditMode.cs" t="Include" />
-            <e p="OLD" t="Include">
-              <e p="Tile.cs" t="Include" />
-              <e p="TileData.cs" t="Include" />
-              <e p="TileMap.cs" t="Include" />
-              <e p="TileSides.cs" t="Include" />
-            </e>
             <e p="QuadTile.cs" t="Include" />
             <e p="QuadTileData.cs" t="Include" />
             <e p="QuadTileMap.cs" t="Include" />

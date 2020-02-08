@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26d579b268c248d4a9343dcd330b04ea, type: 3}
+  m_Name: Dark Grass Hill
+  m_EditorClassIdentifier: 
+  top: {fileID: 2100000, guid: c39d229a79279be4cb8cb62185186cb5, type: 2}
+  sides: {fileID: 2100000, guid: 3ec06692025ccc941b8ed89c65ed4d28, type: 2}
+  difficulty: 1
