@@ -41,6 +41,7 @@
             <e p="QuadTileData.cs" t="Include" />
             <e p="QuadTileMap.cs" t="Include" />
             <e p="QuadTileSides.cs" t="Include" />
+            <e p="Waves.cs" t="Include" />
           </e>
           <e p="SimpleCameraController.cs" t="Include" />
           <e p="Utilities" t="Include">
