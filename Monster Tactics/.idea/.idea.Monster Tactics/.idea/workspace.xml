@@ -23,6 +23,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/43BB9D48-5A6C-4A02-96B4-7F7E78869238/bf/1631e946/OdinEditorWindow.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/59837000-EBF5-4955-A9CB-1D31CAA86097/16/955b92f8/Event.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/Editor/QuadLevelEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/Waves.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F38C71C8-6AA6-4E29-9D4C-EA9FB7C715E1/79/c6e10fb0/Color.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -57,6 +58,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/Extensions.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileMap.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/QuadLevelEditor.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/Waves.cs" />
       </list>
     </option>
   </component>
