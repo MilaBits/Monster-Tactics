@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   top: {fileID: 2100000, guid: c39d229a79279be4cb8cb62185186cb5, type: 2}
   sides: {fileID: 2100000, guid: 3ec06692025ccc941b8ed89c65ed4d28, type: 2}
-  difficulty: 1
+  difficulty: 2
