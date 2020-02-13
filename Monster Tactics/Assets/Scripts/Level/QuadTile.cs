@@ -1,25 +1,65 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 
 namespace Level
 {
-    public class QuadTile : MonoBehaviour
+    public class QuadTile : MonoBehaviour, IEquatable<QuadTile>
     {
         [SerializeField, AssetList]
-        private QuadTileData tileData;
+        private QuadTileData tileData = default;
 
         [PropertyRange(0, 3)]
         public float height;
 
         [SerializeField]
-        private List<QuadTileSides> sideLayers;
+        private List<QuadTileSides> sideLayers = default;
 
         [SerializeField, FoldoutGroup("References")]
-        private MeshRenderer top;
+        private MeshRenderer top = default;
 
         [SerializeField, FoldoutGroup("References")]
-        private QuadTileSides sidesPrefab;
+        private QuadTileSides sidesPrefab = default;
+
+        [SerializeField, FoldoutGroup("References")]
+        private GameObject viableMarker = default;
+
+        public PathfindingData pathFindingData;
+
+        public struct PathfindingData
+        {
+            public bool visited;
+            public int cost;
+            public QuadTile cameFrom;
+
+            public PathfindingData(bool visited, int cost)
+            {
+                this.visited = visited;
+                this.cost = cost;
+                cameFrom = null;
+            }
+        }
+
+        public void ToggleViableMarker(bool value)
+        {
+            viableMarker.SetActive(value);
+        }
+
+        public int GetChainValue(int value)
+        {
+            value = pathFindingData.cost;
+
+            if (pathFindingData.cameFrom)
+            {
+                value += pathFindingData.cameFrom.GetChainValue(value);
+            }
+
+            return value;
+        }
+
+        public void UpdateDebugText(string text) => GetComponentInChildren<TextMeshPro>().text = text;
 
         [Button]
         private void RefreshTile()
@@ -70,5 +110,7 @@ namespace Level
             this.height = height;
             RefreshTile();
         }
+
+        public bool Equals(QuadTile other) => transform.position == other.transform.position;
     }
 }

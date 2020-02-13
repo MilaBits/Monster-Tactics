@@ -5,24 +5,24 @@ using UnityEngine;
 public class Waves : MonoBehaviour
 {
     [SerializeField]
-    private Vector2Int Size;
+    private Vector2Int Size = default;
 
     private GameObject[,] waveTiles;
 
     [SerializeField]
-    private GameObject WaterTile;
+    private GameObject WaterTile = default;
 
     [SerializeField]
-    private Vector2 perlinOffset;
+    private Vector2 perlinOffset = default;
 
     [SerializeField, Range(0, .5f), LabelText("Intensity")]
-    private float stupidOffsetMultiplier;
+    private float stupidOffsetMultiplier = default;
 
     [SerializeField]
     private float maxHeight = .3f;
 
     [SerializeField]
-    private Vector2 speed;
+    private Vector2 speed = default;
 
     private float nextActionTime = 0.0f;
     public float period = 0.1f;

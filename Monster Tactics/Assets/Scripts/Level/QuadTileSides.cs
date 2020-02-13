@@ -5,7 +5,7 @@ namespace Level
     public class QuadTileSides : MonoBehaviour
     {
         [SerializeField]
-        private MeshRenderer[] sides;
+        private MeshRenderer[] sides = default;
 
         public void SetMaterials(Material material)
         {
