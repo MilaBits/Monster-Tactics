@@ -42,18 +42,15 @@ namespace Level
             }
         }
 
-        public void ToggleViableMarker(bool value)
-        {
-            viableMarker.SetActive(value);
-        }
+        public void ToggleViableMarker(bool value) => viableMarker.SetActive(value);
 
-        public int GetChainValue(int value)
+        public int GetChainValue(int value, bool useRoughness)
         {
-            value = pathFindingData.cost;
+            value = useRoughness ? pathFindingData.cost : 1;
 
             if (pathFindingData.cameFrom)
             {
-                value += pathFindingData.cameFrom.GetChainValue(value);
+                value += pathFindingData.cameFrom.GetChainValue(value, useRoughness);
             }
 
             return value;
@@ -112,5 +109,20 @@ namespace Level
         }
 
         public bool Equals(QuadTile other) => transform.position == other.transform.position;
+
+        public List<QuadTile> ChainToList()
+        {
+            List<QuadTile> tiles = new List<QuadTile>();
+
+            QuadTile current = this;
+
+            while (current.pathFindingData.cameFrom != null)
+            {
+                tiles.Add(current);
+                current = current.pathFindingData.cameFrom;
+            }
+
+            return tiles;
+        }
     }
 }

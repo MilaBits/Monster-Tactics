@@ -15,3 +15,5 @@ MonoBehaviour:
   damage: 15
   defense: 15
   move: 5
+  stepLayerLimit: 3
+  useRoughness: 1

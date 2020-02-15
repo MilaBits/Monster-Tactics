@@ -7,5 +7,5 @@ public class Character : MonoBehaviour
     [SerializeField, InlineEditor]
     private CharacterData characterData;
 
-    public CharacterData GetCharacterData() => characterData;
+    public CharacterData Data() => characterData;
 }

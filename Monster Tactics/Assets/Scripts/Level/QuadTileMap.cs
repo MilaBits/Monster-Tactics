@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Sirenix.OdinInspector;
@@ -35,7 +36,7 @@ namespace Level
         public QuadTile GetTile(int x, int y) => Level[new Vector2Int(x, y)];
         public QuadTile GetTile(Vector2Int val) => Level[val];
 
-        public List<QuadTile> GetTilesInRange(QuadTile start, int range, bool useRoughness)
+        public List<QuadTile> GetTilesInRange(QuadTile start, int range, float stepHeightLimit, bool useRoughness)
         {
             ResetPathfindingData();
 
@@ -46,25 +47,30 @@ namespace Level
 
             while (frontier.Count > 0)
             {
-                frontier = new Queue<QuadTile>(frontier.OrderBy(x => x.GetChainValue(0)));
+                frontier = new Queue<QuadTile>(frontier.OrderBy(x => x.GetChainValue(0, useRoughness)));
                 QuadTile current = frontier.Dequeue();
 
 
                 foreach (var neighbor in Neighbors(current.transform.position.ToVector2IntXZ()))
                 {
-                    if (neighbor.pathFindingData.visited) continue;
+                    if (neighbor.pathFindingData.visited ||
+                        Math.Abs(neighbor.height - current.height) > stepHeightLimit) continue;
 
                     frontier.Enqueue(neighbor);
                     neighbor.pathFindingData.visited = true;
                     neighbor.pathFindingData.cameFrom = current;
 
                     Debug.DrawLine(neighbor.transform.position, current.transform.position, Color.blue, 2f);
-                    
+
                     possibleTiles.Add(neighbor);
                 }
             }
 
-            return possibleTiles.Where(x => x.GetChainValue(-start.pathFindingData.cost) <= range && x.GetChainValue(-start.pathFindingData.cost) > 0).ToList();
+            return possibleTiles.Where(x =>
+            {
+                int chainValue = x.GetChainValue(-start.pathFindingData.cost, useRoughness);
+                return chainValue <= range && chainValue > 0;
+            }).ToList();
         }
 
         private void ResetPathfindingData()
