@@ -363,7 +363,7 @@ GameObject:
   - component: {fileID: 6464784360080869044}
   - component: {fileID: 3899899430645885148}
   - component: {fileID: 8831430572811819027}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ViableMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -61,11 +61,11 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Waves.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileSides.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/Character.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/CharacterData.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Character.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterMover.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTile.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileMap.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CharacterData.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTile.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterMover.cs" />
       </list>
     </option>
   </component>
@@ -94,10 +94,10 @@
       <option name="pid" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="9956">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="9956" />
+      <option name="pid" />
       <method v="2" />
     </configuration>
   </component>
@@ -207,11 +207,11 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="616" y="258" key="run.anything.popup/0.30.1920.1050/-1920.30.1920.1050@0.30.1920.1050" timestamp="1581596719666" />
-    <state x="623" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1581073879175">
+    <state x="623" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1581892811132">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="-1297" y="257" width="672" height="678" key="search.everywhere.popup/0.30.1920.1050/-1920.30.1920.1050@-1920.30.1920.1050" timestamp="1580948629348" />
-    <state x="623" y="257" width="672" height="678" key="search.everywhere.popup/0.30.1920.1050/-1920.30.1920.1050@0.30.1920.1050" timestamp="1581073879175" />
+    <state x="623" y="257" width="672" height="678" key="search.everywhere.popup/0.30.1920.1050/-1920.30.1920.1050@0.30.1920.1050" timestamp="1581892811132" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -220,19 +220,6 @@
           <properties exception="System.Threading.ThreadAbortException" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="1" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Level/QuadTileMap.cs</url>
-          <line>46</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileMap.cs" initialLine="46">
-            <startOffsets>
-              <option value="1757" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1783" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
