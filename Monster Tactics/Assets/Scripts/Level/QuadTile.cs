@@ -28,6 +28,8 @@ namespace Level
 
         public PathfindingData pathFindingData;
 
+        public Vector3 PositionWithHeight() => transform.position + Vector3.up * height;
+
         public struct PathfindingData
         {
             public bool visited;
