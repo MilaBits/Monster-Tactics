@@ -31,8 +31,10 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
-          <e p="Character.cs" t="Include" />
-          <e p="CharacterData.cs" t="Include" />
+          <e p="Characters" t="Include">
+            <e p="Character.cs" t="Include" />
+            <e p="CharacterData.cs" t="Include" />
+          </e>
           <e p="Gameplay" t="Include">
             <e p="CharacterMover.cs" t="Include" />
           </e>

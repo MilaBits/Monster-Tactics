@@ -24,9 +24,6 @@ public class Waves : MonoBehaviour
     [SerializeField]
     private Vector2 speed = default;
 
-    private float nextActionTime = 0.0f;
-    public float period = 0.1f;
-
     private void Start()
     {
         waveTiles = new GameObject[Size.x, Size.y];
@@ -43,27 +40,22 @@ public class Waves : MonoBehaviour
 
     private void Update()
     {
-        if (Time.time > nextActionTime)
+        perlinOffset += speed;
+
+        for (int x = 0; x < waveTiles.GetLength(0); x++)
         {
-            nextActionTime += period;
-
-            perlinOffset += speed;
-
-            for (int x = 0; x < waveTiles.GetLength(0); x++)
+            for (int y = 0; y < waveTiles.GetLength(1); y++)
             {
-                for (int y = 0; y < waveTiles.GetLength(1); y++)
-                {
-                    GameObject waveTile = waveTiles[x, y];
+                GameObject waveTile = waveTiles[x, y];
 
-                    Vector2 offset = perlinOffset + new Vector2(x, y);
+                Vector2 offset = perlinOffset + new Vector2(x, y);
 
-                    Vector3 position = waveTile.transform.localPosition;
-                    position = new Vector3(position.x,
-                        Mathf.PerlinNoise(offset.x * stupidOffsetMultiplier, offset.y * stupidOffsetMultiplier) *
-                        maxHeight,
-                        position.z);
-                    waveTile.transform.localPosition = position;
-                }
+                Vector3 position = waveTile.transform.localPosition;
+                position = new Vector3(position.x,
+                    Mathf.PerlinNoise(offset.x * stupidOffsetMultiplier, offset.y * stupidOffsetMultiplier) *
+                    maxHeight,
+                    position.z);
+                waveTile.transform.localPosition = position;
             }
         }
     }

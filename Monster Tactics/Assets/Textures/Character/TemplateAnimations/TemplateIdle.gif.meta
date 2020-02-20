@@ -14,6 +14,18 @@ TextureImporter:
   - first:
       213: -5883864014680870847
     second: TemplateWalk_3
+  - first:
+      213: -2769423899070989229
+    second: TemplateIdle_0
+  - first:
+      213: 1404017294382152824
+    second: TemplateIdle_1
+  - first:
+      213: -628878126483814145
+    second: TemplateIdle_2
+  - first:
+      213: 7100223996062507616
+    second: TemplateIdle_3
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -134,7 +146,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TemplateWalk_0
+      name: TemplateIdle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -148,14 +160,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd8b13813e8fa23d0800000000000000
-      internalID: -3230496128437733156
+      spriteID: 35c756703a70199d0800000000000000
+      internalID: -2769423899070989229
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TemplateWalk_1
+      name: TemplateIdle_1
       rect:
         serializedVersion: 2
         x: 0
@@ -169,14 +181,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9c9686afe8ad1d80800000000000000
-      internalID: -8278274792792613730
+      spriteID: 87c372a5a421c7310800000000000000
+      internalID: 1404017294382152824
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TemplateWalk_2
+      name: TemplateIdle_2
       rect:
         serializedVersion: 2
         x: 0
@@ -190,14 +202,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 132018f998deed1d0800000000000000
-      internalID: -3323958299610512847
+      spriteID: ff84be70da6c547f0800000000000000
+      internalID: -628878126483814145
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TemplateWalk_3
+      name: TemplateIdle_3
       rect:
         serializedVersion: 2
         x: 0
@@ -211,8 +223,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1403e3a4ad0585ea0800000000000000
-      internalID: -5883864014680870847
+      spriteID: 062a2071b10198260800000000000000
+      internalID: 7100223996062507616
       vertices: []
       indices: 
       edges: []

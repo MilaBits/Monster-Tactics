@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Characters;
 using Level;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -9,18 +10,18 @@ using Utilities;
 public class CharacterMover : MonoBehaviour
 {
     [SerializeField, InlineEditor]
-    private Character Character;
+    private Character Character = default;
 
     private QuadTileMap tileMap;
 
     [SerializeField]
-    private AnimationCurve jumpCurve;
+    private AnimationCurve jumpCurve = default;
 
     [SerializeField]
-    private GameObject ArrowMarkerPrefab;
+    private GameObject ArrowMarkerPrefab = default;
 
     [SerializeField]
-    private GameObject LineMarkerPrefab;
+    private GameObject LineMarkerPrefab = default;
 
     private Queue<GameObject> LinePool = new Queue<GameObject>();
     private List<GameObject> visibleLines = new List<GameObject>();
@@ -67,11 +68,6 @@ public class CharacterMover : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-
-        // if (Physics.Raycast(ray, out hit, 100, LayerMask.NameToLayer("Viable Marker")) && !moving)
-        // {
-        //     DrawPath(hit.transform.GetComponentInParent<QuadTile>());
-        // }
 
         if (Input.GetButtonDown("Fire1"))
         {
@@ -155,6 +151,7 @@ public class CharacterMover : MonoBehaviour
     private IEnumerator MoveAlongPath(List<QuadTile> path, float stepTime)
     {
         moving = true;
+
         for (int i = 0; i < path.Count; i++)
         {
             yield return StartCoroutine(
