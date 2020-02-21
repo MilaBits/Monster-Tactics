@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using UnityEditor.Animations;
 using UnityEngine;
 
 namespace Characters
@@ -18,6 +19,9 @@ namespace Characters
         public float stepLayerLimit = .5f;
 
         public bool useRoughness = true;
+
+        [Space]
+        public AnimatorController animatorController;
 
         private void RoundHalf() =>
             stepLayerLimit = (float) Math.Round(stepLayerLimit * 2, MidpointRounding.AwayFromZero) / 2;

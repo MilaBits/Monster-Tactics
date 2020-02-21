@@ -13829,7 +13829,7 @@ MonoBehaviour:
   perlinOffset: {x: 0, y: 0}
   stupidOffsetMultiplier: 0.123
   maxHeight: 0.9
-  speed: {x: 0.1, y: -0.02}
+  speed: {x: 0.05, y: -0.02}
 --- !u!4 &468333197
 Transform:
   m_ObjectHideFlags: 0
@@ -35735,6 +35735,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Character: {fileID: 1443572767}
+  stepTime: 0.5
+  jumpTime: 2
   jumpCurve:
     serializedVersion: 2
     m_Curve:
@@ -39464,7 +39466,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1443572765}
   m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 0, z: -6}
+  m_LocalPosition: {x: 0, y: 0, z: -6.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1879324252}

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Characters
@@ -12,5 +11,23 @@ namespace Characters
         public CharacterData Data() => characterData;
 
         private SpriteRenderer spriteRenderer;
+        private Animator animator;
+
+        private void Awake()
+        {
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+            animator = GetComponent<Animator>();
+            animator.runtimeAnimatorController = Data().animatorController;
+
+            // animator.SetTrigger("Idle");
+        }
+
+        public void FlipCharacter(bool flip)
+        {
+            spriteRenderer.flipX = flip;
+        }
+
+        public void ChangeAnimation(string animation) => animator.SetTrigger(animation);
     }
 }

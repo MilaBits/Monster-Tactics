@@ -14,9 +14,17 @@ public class CharacterMover : MonoBehaviour
 
     private QuadTileMap tileMap;
 
+    [Space]
+    [SerializeField]
+    private float stepTime = .5f;
+
+    [SerializeField]
+    private float jumpTime = 1f;
+
     [SerializeField]
     private AnimationCurve jumpCurve = default;
 
+    [Space]
     [SerializeField]
     private GameObject ArrowMarkerPrefab = default;
 
@@ -26,8 +34,6 @@ public class CharacterMover : MonoBehaviour
     private Queue<GameObject> LinePool = new Queue<GameObject>();
     private List<GameObject> visibleLines = new List<GameObject>();
     private GameObject Arrow;
-
-    private bool moving;
 
     private GameObject GetLineSegmentFromPool()
     {
@@ -124,61 +130,49 @@ public class CharacterMover : MonoBehaviour
     private void RotateMarkerBasedOnDirection(Transform marker, Vector2Int curr, Vector2Int prev)
     {
         Vector2Int dir = curr - prev;
-
-        if (dir.Equals(Vector2Int.up))
-        {
-            marker.rotation = Quaternion.Euler(0, 180, 0);
-        }
-        else if (dir.Equals(Vector2Int.right))
-        {
-            marker.rotation = Quaternion.Euler(0, 270, 0);
-        }
-        else if (dir.Equals(Vector2Int.down))
-        {
-            marker.rotation = Quaternion.Euler(0, 0, 0);
-        }
-        else if (dir.Equals(Vector2Int.left))
-        {
-            marker.rotation = Quaternion.Euler(0, 90, 0);
-        }
+        if (dir.Equals(Vector2Int.up)) marker.rotation = Quaternion.Euler(0, 180, 0);
+        else if (dir.Equals(Vector2Int.right)) marker.rotation = Quaternion.Euler(0, 270, 0);
+        else if (dir.Equals(Vector2Int.down)) marker.rotation = Quaternion.Euler(0, 0, 0);
+        else if (dir.Equals(Vector2Int.left)) marker.rotation = Quaternion.Euler(0, 90, 0);
     }
 
-    private void Move(List<QuadTile> path)
-    {
-        StartCoroutine(MoveAlongPath(path, .5f));
-    }
+    private void Move(List<QuadTile> path) => StartCoroutine(MoveAlongPath(path, stepTime));
 
     private IEnumerator MoveAlongPath(List<QuadTile> path, float stepTime)
     {
-        moving = true;
-
+        Character.ChangeAnimation("Walk");
         for (int i = 0; i < path.Count; i++)
         {
             yield return StartCoroutine(
                 TakePathStep(path[i].PositionWithHeight(), stepTime));
         }
 
-        moving = false;
         MarkPossible();
         ClearLines();
+        Character.ChangeAnimation("Idle");
+        Character.FlipCharacter(false);
     }
 
-    private IEnumerator TakePathStep(Vector3 target, float stepTime)
+    private IEnumerator TakePathStep(Vector3 target, float stepDuration)
     {
         Vector3 start = Character.transform.position;
+        FlipCharacterBasedOnDirection(target, start);
+
         bool jump = start.y != target.y;
 
         float progress;
 
         if (jump)
         {
-            yield return new WaitForSeconds(stepTime * .33f);
-            stepTime *= .66f;
+            stepDuration = jumpTime;
+            Character.ChangeAnimation("Jump");
+            yield return new WaitForSeconds(stepDuration * .33f);
+            stepDuration *= .66f;
         }
 
-        for (float elapsed = 0; elapsed < stepTime; elapsed += Time.deltaTime)
+        for (float elapsed = 0; elapsed < stepDuration; elapsed += Time.deltaTime)
         {
-            progress = elapsed / stepTime;
+            progress = elapsed / stepDuration;
             float yOffset = jump ? jumpCurve.Evaluate(progress) : 0;
 
             Character.transform.position = Vector3.Lerp(start, target, progress) + Vector3.up * yOffset;
@@ -186,5 +180,14 @@ public class CharacterMover : MonoBehaviour
         }
 
         Character.transform.position = target;
+    }
+
+    private void FlipCharacterBasedOnDirection(Vector3 target, Vector3 start)
+    {
+        Vector2Int direction = target.ToVector2IntXZ() - start.ToVector2IntXZ();
+        if (direction.Equals(Vector2Int.up)) Character.FlipCharacter(true);
+        else if (direction.Equals(Vector2Int.right)) Character.FlipCharacter(true);
+        else if (direction.Equals(Vector2Int.down)) Character.FlipCharacter(false);
+        else if (direction.Equals(Vector2Int.left)) Character.FlipCharacter(false);
     }
 }
