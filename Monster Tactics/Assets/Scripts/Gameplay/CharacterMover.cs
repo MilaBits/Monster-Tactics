@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Characters;
@@ -16,13 +17,10 @@ public class CharacterMover : MonoBehaviour
 
     [Space]
     [SerializeField]
-    private float stepTime = .5f;
+    private MoveParams moveParams = default;
 
     [SerializeField]
-    private float jumpTime = 1f;
-
-    [SerializeField]
-    private AnimationCurve jumpCurve = default;
+    private MoveParams jumpParams = default;
 
     [Space]
     [SerializeField]
@@ -136,7 +134,7 @@ public class CharacterMover : MonoBehaviour
         else if (dir.Equals(Vector2Int.left)) marker.rotation = Quaternion.Euler(0, 90, 0);
     }
 
-    private void Move(List<QuadTile> path) => StartCoroutine(MoveAlongPath(path, stepTime));
+    private void Move(List<QuadTile> path) => StartCoroutine(MoveAlongPath(path, moveParams.duration));
 
     private IEnumerator MoveAlongPath(List<QuadTile> path, float stepTime)
     {
@@ -164,22 +162,43 @@ public class CharacterMover : MonoBehaviour
 
         if (jump)
         {
-            stepDuration = jumpTime;
+            stepDuration = jumpParams.duration;
             Character.ChangeAnimation("Jump");
-            yield return new WaitForSeconds(stepDuration * .33f);
-            stepDuration *= .66f;
         }
 
         for (float elapsed = 0; elapsed < stepDuration; elapsed += Time.deltaTime)
         {
             progress = elapsed / stepDuration;
-            float yOffset = jump ? jumpCurve.Evaluate(progress) : 0;
+            float yOffset =
+                jump
+                    ? jumpParams.verticalMovement.Evaluate(progress)
+                    : 0;
+            float horizontalProgress =
+                jump
+                    ? jumpParams.horizontalMovement.Evaluate(progress)
+                    : moveParams.horizontalMovement.Evaluate(progress);
 
-            Character.transform.position = Vector3.Lerp(start, target, progress) + Vector3.up * yOffset;
+            Character.transform.position =
+                Vector3.Lerp(start, target, horizontalProgress) + Vector3.up * yOffset;
             yield return null;
         }
 
         Character.transform.position = target;
+    }
+
+    [Serializable]
+    private struct MoveParams
+    {
+        public float duration;
+        public AnimationCurve horizontalMovement;
+        public AnimationCurve verticalMovement;
+
+        public MoveParams(float duration, AnimationCurve horizontalMovement, AnimationCurve verticalMovement)
+        {
+            this.duration = duration;
+            this.horizontalMovement = horizontalMovement;
+            this.verticalMovement = verticalMovement;
+        }
     }
 
     private void FlipCharacterBasedOnDirection(Vector3 target, Vector3 start)

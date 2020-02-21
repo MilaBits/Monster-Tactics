@@ -53,7 +53,6 @@ namespace Level.Editor
         private string HeightString() => $"Height - {height}";
         private void RoundHalf() => height = (float) Math.Round(height * 2, MidpointRounding.AwayFromZero) / 2;
         private bool AllowAdd() => top != null && side != null && !brushName.IsNullOrWhitespace();
-        private bool AllowSave() => !SaveName.IsNullOrWhitespace();
 
         private readonly Color ADD_COLOR = new Color(0, 1, 0, .5f);
         private readonly Color REM_COLOR = new Color(1, 0, 0, .5f);
@@ -70,19 +69,30 @@ namespace Level.Editor
 
         private Vector3 lastSnappedPosition;
 
-        [FoldoutGroup("Save")]
-        [SerializeField, LabelText("Map Name")]
-        private string SaveName = default;
-
-        [FoldoutGroup("Save")]
-        [Button, EnableIf("AllowSave")]
+        [FoldoutGroup("Save & Load"), Button]
         private void SaveMap()
         {
-            LevelData levelData = CreateInstance<LevelData>();
-            levelData.Tiles = tileMap.GetTiles();
-            AssetDatabase.CreateAsset(levelData, $"Assets/Levels/{SaveName}.asset");
+            SavedLevelData levelData = CreateInstance<SavedLevelData>();
+            foreach (KeyValuePair<Vector2Int, QuadTile> tile in tileMap.GetTiles())
+            {
+                levelData.Tiles.Add(tile.Key,
+                    new SavedLevelData.SavedTileData {Data = tile.Value.Data(), Height = tile.Value.height});
+            }
+
+            string path = "Assets" + EditorUtility
+                              .SaveFilePanel("Save Level", "Assets/Levels/", "New Level.asset", "asset")
+                              .Substring(Application.dataPath.Length);
+
+            SavedLevelData data = AssetDatabase.LoadAssetAtPath<SavedLevelData>(path);
+
+            AssetDatabase.CreateAsset(levelData, path);
         }
 
+        [FoldoutGroup("Save & Load"), Button]
+        private void LoadMap() => tileMap.LoadMap();
+
+        [FoldoutGroup("Save & Load"), Button]
+        private void ClearMap() => tileMap.Clear();
 
         protected override void OnEnable()
         {

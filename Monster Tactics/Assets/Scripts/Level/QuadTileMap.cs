@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Sirenix.OdinInspector;
+using UnityEditor;
 using UnityEngine;
 using Utilities;
 
@@ -23,18 +24,33 @@ namespace Level
         {
             List<QuadTile> result = new List<QuadTile>();
             QuadTile value;
-            if (Level.TryGetValue(position + Vector2Int.left, out value)) result.Add(value);
-            if (Level.TryGetValue(position + Vector2Int.up, out value)) result.Add(value);
-            if (Level.TryGetValue(position + Vector2Int.right, out value)) result.Add(value);
-            if (Level.TryGetValue(position + Vector2Int.down, out value)) result.Add(value);
+            if (GetTiles().TryGetValue(position + Vector2Int.left, out value)) result.Add(value);
+            if (GetTiles().TryGetValue(position + Vector2Int.up, out value)) result.Add(value);
+            if (GetTiles().TryGetValue(position + Vector2Int.right, out value)) result.Add(value);
+            if (GetTiles().TryGetValue(position + Vector2Int.down, out value)) result.Add(value);
             return result;
         }
 
         [SerializeField, HideInInspector]
         private QuadTile tilePrefab = default;
 
-        public QuadTile GetTile(int x, int y) => Level[new Vector2Int(x, y)];
-        public QuadTile GetTile(Vector2Int val) => Level[val];
+        public QuadTile GetTile(int x, int y) => GetTiles()[new Vector2Int(x, y)];
+        public QuadTile GetTile(Vector2Int val) => GetTiles()[val];
+
+        public void LoadMap()
+        {
+            string path = "Assets" + EditorUtility.OpenFilePanel("Select Level", "Assets/Levels/", "asset")
+                              .Substring(Application.dataPath.Length);
+
+            SavedLevelData data = AssetDatabase.LoadAssetAtPath<SavedLevelData>(path);
+
+            Clear();
+
+            foreach (KeyValuePair<Vector2Int, SavedLevelData.SavedTileData> tile in data.Tiles)
+            {
+                AddTile(new Vector3(tile.Key.x, 0, tile.Key.y), tile.Value.Data, tile.Value.Height);
+            }
+        }
 
         public List<QuadTile> GetTilesInRange(QuadTile start, int range, float stepHeightLimit, bool useRoughness)
         {
@@ -75,7 +91,7 @@ namespace Level
 
         private void ResetPathfindingData()
         {
-            foreach (KeyValuePair<Vector2Int, QuadTile> keyValuePair in Level)
+            foreach (KeyValuePair<Vector2Int, QuadTile> keyValuePair in GetTiles())
             {
                 keyValuePair.Value.ToggleViableMarker(false);
                 keyValuePair.Value.pathFindingData =
@@ -85,7 +101,7 @@ namespace Level
 
         public void AddTile(Vector3 position, QuadTileData brush, float height)
         {
-            if (Level.ContainsKey(position.ToVector2IntXZ()))
+            if (GetTiles().ContainsKey(position.ToVector2IntXZ()))
             {
                 ReplaceTile(position, brush, height);
                 return;
@@ -95,24 +111,30 @@ namespace Level
             newTile.Init(brush, height);
             newTile.gameObject.SetLayerRecursively(LayerMask.NameToLayer("Ignore Editor"));
 
-            Level.Add(position.ToVector2IntXZ(), newTile);
+            GetTiles().Add(position.ToVector2IntXZ(), newTile);
         }
 
         public void DeleteTile(Vector3 position)
         {
-            if (!Level.ContainsKey(position.ToVector2IntXZ())) return;
+            if (!GetTiles().ContainsKey(position.ToVector2IntXZ())) return;
 
-            QuadTile tile = Level[position.ToVector2IntXZ()];
-            Level.Remove(position.ToVector2IntXZ());
+            QuadTile tile = GetTiles()[position.ToVector2IntXZ()];
+            GetTiles().Remove(position.ToVector2IntXZ());
             DestroyImmediate(tile.gameObject);
         }
 
         private void ReplaceTile(Vector3 position, QuadTileData brush, float height)
         {
-            if (Level.ContainsKey(position.ToVector2IntXZ()))
+            if (GetTiles().ContainsKey(position.ToVector2IntXZ()))
             {
-                Level[position.ToVector2IntXZ()].Init(brush, height);
+                GetTiles()[position.ToVector2IntXZ()].Init(brush, height);
             }
+        }
+
+        public void Clear()
+        {
+            for (int i = transform.childCount - 1; i >= 0; i--) DestroyImmediate(transform.GetChild(i).gameObject);
+            Level.Clear();
         }
     }
 }
