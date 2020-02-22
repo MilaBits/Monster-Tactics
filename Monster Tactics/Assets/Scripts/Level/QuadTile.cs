@@ -46,7 +46,7 @@ namespace Level
 
         public void ToggleViableMarker(bool value)
         {
-            viableMarker.layer = LayerMask.GetMask("Viable Marker");
+            viableMarker.layer = LayerMask.NameToLayer("Viable Marker");
             viableMarker.SetActive(value);
         }
 
