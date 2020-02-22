@@ -62,7 +62,6 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileSides.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/Character.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CharacterData.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTile.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Character.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Waves.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Character/AnimationData.cs" />
@@ -74,6 +73,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/QuadLevelEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileMap.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterMover.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTile.cs" />
       </list>
     </option>
   </component>
@@ -102,10 +102,10 @@
       <option name="pid" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="13348">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="13348" />
+      <option name="pid" />
       <method v="2" />
     </configuration>
   </component>

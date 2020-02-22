@@ -44,7 +44,11 @@ namespace Level
             }
         }
 
-        public void ToggleViableMarker(bool value) => viableMarker.SetActive(value);
+        public void ToggleViableMarker(bool value)
+        {
+            viableMarker.layer = LayerMask.GetMask("Viable Marker");
+            viableMarker.SetActive(value);
+        }
 
         public int GetChainValue(int value, bool useRoughness)
         {
