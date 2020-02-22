@@ -147,6 +147,39 @@ MonoBehaviour:
   sidesPrefab: {fileID: 560940631866431372, guid: 3281c22bcbf9f524ea29cff6fe7b5f63,
     type: 3}
   viableMarker: {fileID: 3242086128746749906}
+  pushDownCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0
+      value: -0.0011861324
+      inSlope: -0.39525548
+      outSlope: -0.39525548
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.25
+      value: -0.1
+      inSlope: 0.0006231195
+      outSlope: 0.0006231195
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.32655594
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0.13333334
+      outSlope: 0.13333334
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1552624746822554691
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using System.IO;
 using Characters;
 using Level;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using UnityEngine;
 using Utilities;
 
@@ -95,6 +96,7 @@ public class CharacterMover : MonoBehaviour
 
                 if (Input.GetButtonDown("Fire1"))
                 {
+                    ClearPossible();
                     Move(path);
                 }
 
@@ -102,6 +104,8 @@ public class CharacterMover : MonoBehaviour
             }
         }
     }
+
+    private void ClearPossible() => tileMap.GetTiles().ForEach(x => x.Value.ToggleViableMarker(false));
 
     private void DrawPath(QuadTile target)
     {
@@ -184,6 +188,8 @@ public class CharacterMover : MonoBehaviour
             stepDuration = jumpParams.duration;
             Character.ChangeAnimation("Jump");
         }
+
+        tileMap.GetTile(target.ToVector2IntXZ()).PushDown(stepDuration / 2, 1);
 
         for (float elapsed = 0; elapsed < stepDuration; elapsed += Time.deltaTime)
         {
