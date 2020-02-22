@@ -72,8 +72,8 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/SavedLevelData.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/QuadLevelEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileMap.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterMover.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTile.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterMover.cs" />
       </list>
     </option>
   </component>

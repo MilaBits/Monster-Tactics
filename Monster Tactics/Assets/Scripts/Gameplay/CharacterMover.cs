@@ -33,6 +33,10 @@ public class CharacterMover : MonoBehaviour
     private List<GameObject> visibleLines = new List<GameObject>();
     private GameObject Arrow;
 
+    private bool moving = false;
+
+    private List<QuadTile> oldPath;
+
     private GameObject GetLineSegmentFromPool()
     {
         if (LinePool.Count < 1) LinePool.Enqueue(Instantiate(LineMarkerPrefab));
@@ -54,6 +58,7 @@ public class CharacterMover : MonoBehaviour
         Arrow.SetActive(false);
 
         tileMap = FindObjectOfType<QuadTileMap>();
+        MarkPossible();
     }
 
     [Button]
@@ -73,15 +78,27 @@ public class CharacterMover : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Physics.Raycast(ray, out hit, 100, LayerMask.GetMask("Viable Marker")))
         {
-            if (Physics.Raycast(ray, out hit, 100, LayerMask.GetMask("Viable Marker")))
+            if (!moving)
             {
                 List<QuadTile> path = hit.transform.GetComponentInParent<QuadTile>().ChainToList();
 
+                if (oldPath == path)
+                {
+                    return;
+                }
+
+
                 path.Reverse();
-                Move(path);
                 DrawPath(hit.transform.GetComponentInParent<QuadTile>());
+
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    Move(path);
+                }
+
+                oldPath = path;
             }
         }
     }
@@ -138,6 +155,7 @@ public class CharacterMover : MonoBehaviour
 
     private IEnumerator MoveAlongPath(List<QuadTile> path, float stepTime)
     {
+        moving = true;
         Character.ChangeAnimation("Walk");
         for (int i = 0; i < path.Count; i++)
         {
@@ -149,6 +167,7 @@ public class CharacterMover : MonoBehaviour
         ClearLines();
         Character.ChangeAnimation("Idle");
         Character.FlipCharacter(false);
+        moving = false;
     }
 
     private IEnumerator TakePathStep(Vector3 target, float stepDuration)
