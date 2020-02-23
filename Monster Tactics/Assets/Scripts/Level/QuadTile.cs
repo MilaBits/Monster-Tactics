@@ -29,9 +29,6 @@ namespace Level
 
         public PathfindingData pathFindingData;
 
-        [SerializeField]
-        private AnimationCurve pushDownCurve;
-        
         public Vector3 PositionWithHeight() => transform.position + Vector3.up * height;
 
         public struct PathfindingData
@@ -135,19 +132,19 @@ namespace Level
             return tiles;
         }
 
-        public void PushDown(float delay, float t)
+        public void PushDown(AnimationCurve curve, float delay, float t)
         {
-            StartCoroutine(PushDownAnim(delay, t));
+            StartCoroutine(PushDownAnim(curve, delay, t));
         }
 
-        private IEnumerator PushDownAnim(float delay, float t)
+        private IEnumerator PushDownAnim(AnimationCurve curve, float delay, float t)
         {
             Vector3 start = transform.position;
 
             yield return new WaitForSeconds(delay);
             for (float timePassed = 0; timePassed < t; timePassed += Time.deltaTime)
             {
-                transform.position = start + Vector3.up * pushDownCurve.Evaluate(timePassed / t);
+                transform.position = start + Vector3.up * curve.Evaluate(timePassed / t);
                 yield return null;
             }
 
