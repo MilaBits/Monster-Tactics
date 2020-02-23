@@ -132,16 +132,15 @@ namespace Level
             return tiles;
         }
 
-        public void PushDown(AnimationCurve curve, float delay, float t)
+        public void PushDown(AnimationCurve curve, float t)
         {
-            StartCoroutine(PushDownAnim(curve, delay, t));
+            StartCoroutine(PushDownAnim(curve, t));
         }
 
-        private IEnumerator PushDownAnim(AnimationCurve curve, float delay, float t)
+        private IEnumerator PushDownAnim(AnimationCurve curve, float t)
         {
             Vector3 start = transform.position;
 
-            yield return new WaitForSeconds(delay);
             for (float timePassed = 0; timePassed < t; timePassed += Time.deltaTime)
             {
                 transform.position = start + Vector3.up * curve.Evaluate(timePassed / t);
