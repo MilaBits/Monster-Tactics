@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -132,18 +133,18 @@ namespace Level
             return tiles;
         }
 
-        public void PushDown(AnimationCurve curve, float t)
+        public void PushDown(AnimationCurve curve)
         {
-            StartCoroutine(PushDownAnim(curve, t));
+            StartCoroutine(PushDownAnim(curve));
         }
 
-        private IEnumerator PushDownAnim(AnimationCurve curve, float t)
+        private IEnumerator PushDownAnim(AnimationCurve curve)
         {
             Vector3 start = transform.position;
-
-            for (float timePassed = 0; timePassed < t; timePassed += Time.deltaTime)
+            float duration = curve.keys.Last().time;
+            for (float timePassed = 0; timePassed < duration; timePassed += Time.deltaTime)
             {
-                transform.position = start + Vector3.up * curve.Evaluate(timePassed / t);
+                transform.position = start + Vector3.up * curve.Evaluate(timePassed / duration);
                 yield return null;
             }
 

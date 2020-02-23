@@ -193,7 +193,7 @@ public class CharacterMover : MonoBehaviour
         }
 
 
-        tileMap.GetTile(target.ToVector2IntXZ()).PushDown(curve, 1);
+        tileMap.GetTile(target.ToVector2IntXZ()).PushDown(curve);
 
         for (float elapsed = 0; elapsed < stepDuration; elapsed += Time.deltaTime)
         {
