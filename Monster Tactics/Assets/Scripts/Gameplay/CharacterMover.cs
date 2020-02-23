@@ -183,13 +183,17 @@ public class CharacterMover : MonoBehaviour
 
         float progress;
 
+        AnimationCurve curve = moveParams.floorBounce;
+
         if (jump)
         {
             stepDuration = jumpParams.duration;
+            curve = jumpParams.floorBounce;
             Character.ChangeAnimation("Jump");
         }
 
-        tileMap.GetTile(target.ToVector2IntXZ()).PushDown(stepDuration / 2, 1);
+
+        tileMap.GetTile(target.ToVector2IntXZ()).PushDown(curve, stepDuration / 2, 1);
 
         for (float elapsed = 0; elapsed < stepDuration; elapsed += Time.deltaTime)
         {
@@ -217,12 +221,15 @@ public class CharacterMover : MonoBehaviour
         public float duration;
         public AnimationCurve horizontalMovement;
         public AnimationCurve verticalMovement;
+        public AnimationCurve floorBounce;
 
-        public MoveParams(float duration, AnimationCurve horizontalMovement, AnimationCurve verticalMovement)
+        public MoveParams(float duration, AnimationCurve horizontalMovement,
+            AnimationCurve verticalMovement, AnimationCurve floorBounce)
         {
             this.duration = duration;
             this.horizontalMovement = horizontalMovement;
             this.verticalMovement = verticalMovement;
+            this.floorBounce = floorBounce;
         }
     }
 
