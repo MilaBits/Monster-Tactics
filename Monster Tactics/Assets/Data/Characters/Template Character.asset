@@ -24,6 +24,6 @@ MonoBehaviour:
   damage: 0
   defense: 0
   move: 5
-  stepLayerLimit: 0.5
+  stepLayerLimit: 1
   useRoughness: 1
   animatorController: {fileID: 9100000, guid: 6321eca75c80615498f4d629db307e96, type: 2}
