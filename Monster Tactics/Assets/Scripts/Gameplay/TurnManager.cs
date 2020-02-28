@@ -41,7 +41,8 @@ public class TurnManager : MonoBehaviour
     private IEnumerator StartTurn()
     {
         ActiveCharacter = Characters.Dequeue();
+        ActiveCharacter.RefillActionPoints();
         yield return StartCoroutine(cameraController.SwitchTarget(ActiveCharacter.transform));
-        gameUiManager.ActionWindow.ToggleWindow(true);
+        gameUiManager.ActionWindow.ToggleWindow(true, true);
     }
 }

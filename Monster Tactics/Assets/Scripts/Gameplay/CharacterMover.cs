@@ -38,7 +38,7 @@ public class CharacterMover : MonoBehaviour
 
     private List<QuadTile> oldPath;
 
-    private Action<bool> returnAction;
+    private Action<bool, bool> returnAction;
 
     private GameObject GetLineSegmentFromPool()
     {
@@ -172,7 +172,7 @@ public class CharacterMover : MonoBehaviour
         target.ChangeAnimation("Idle");
         target.FlipCharacter(false);
         moving = false;
-        returnAction.Invoke(true);
+        returnAction.Invoke(true, false);
     }
 
     private IEnumerator TakePathStep(Vector3 target, float stepDuration)
@@ -243,7 +243,7 @@ public class CharacterMover : MonoBehaviour
         else if (direction.Equals(Vector2Int.left)) this.target.FlipCharacter(false);
     }
 
-    public void StartMove(Action<bool> toggleWindow, Character character)
+    public void StartMove(Action<bool, bool> toggleWindow, Character character)
     {
         returnAction = toggleWindow;
         target = character;

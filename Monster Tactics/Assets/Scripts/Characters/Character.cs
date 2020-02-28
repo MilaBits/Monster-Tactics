@@ -8,7 +8,8 @@ namespace Characters
         [SerializeField, InlineEditor]
         private CharacterData characterData = default;
 
-        private int Health;
+        private int health;
+        private int actionPoints;
 
         public CharacterData Data() => characterData;
 
@@ -22,14 +23,13 @@ namespace Characters
             animator = GetComponent<Animator>();
             animator.runtimeAnimatorController = Data().animatorController;
 
-            Health = Data().MaxHealth;
+            health = Data().MaxHealth;
         }
 
-        public void FlipCharacter(bool flip)
-        {
-            spriteRenderer.flipX = flip;
-        }
-
+        public void FlipCharacter(bool flip) => spriteRenderer.flipX = flip;
         public void ChangeAnimation(string animation) => animator.SetTrigger(animation);
+        public void RefillActionPoints() => actionPoints = Data().MaxActionPoints;
+        public void LoseActionPoints(int amount) => actionPoints -= amount;
+        public int ActionPoints() => actionPoints;
     }
 }

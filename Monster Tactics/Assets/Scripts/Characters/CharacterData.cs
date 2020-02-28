@@ -12,6 +12,8 @@ namespace Characters
         [Header("Stats")]
         public int MaxHealth;
 
+        public int MaxActionPoints;
+
         public int Attack;
         public int defense;
         public int move;
