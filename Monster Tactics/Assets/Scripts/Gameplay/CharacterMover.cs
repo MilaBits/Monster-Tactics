@@ -12,7 +12,7 @@ using Utilities;
 public class CharacterMover : MonoBehaviour
 {
     [SerializeField, InlineEditor]
-    private Character Character = default;
+    private Character target = default;
 
     private QuadTileMap tileMap;
 
@@ -38,6 +38,8 @@ public class CharacterMover : MonoBehaviour
 
     private List<QuadTile> oldPath;
 
+    private Action<bool> returnAction;
+
     private GameObject GetLineSegmentFromPool()
     {
         if (LinePool.Count < 1) LinePool.Enqueue(Instantiate(LineMarkerPrefab));
@@ -59,16 +61,15 @@ public class CharacterMover : MonoBehaviour
         Arrow.SetActive(false);
 
         tileMap = FindObjectOfType<QuadTileMap>();
-        MarkPossible();
     }
 
     [Button]
     private void MarkPossible()
     {
         foreach (QuadTile tile in tileMap.GetTilesInRange(
-            tileMap.GetTile(Character.transform.position.ToVector2IntXZ()), Character.Data().move,
-            Character.Data().stepLayerLimit,
-            Character.Data().useRoughness))
+            tileMap.GetTile(target.transform.position.ToVector2IntXZ()), target.Data().move,
+            target.Data().stepLayerLimit,
+            target.Data().useRoughness))
         {
             tile.ToggleViableMarker(true);
         }
@@ -160,23 +161,23 @@ public class CharacterMover : MonoBehaviour
     private IEnumerator MoveAlongPath(List<QuadTile> path, float stepTime)
     {
         moving = true;
-        Character.ChangeAnimation("Walk");
+        target.ChangeAnimation("Walk");
         for (int i = 0; i < path.Count; i++)
         {
             yield return StartCoroutine(
                 TakePathStep(path[i].PositionWithHeight(), stepTime));
         }
 
-        MarkPossible();
         ClearLines();
-        Character.ChangeAnimation("Idle");
-        Character.FlipCharacter(false);
+        target.ChangeAnimation("Idle");
+        target.FlipCharacter(false);
         moving = false;
+        returnAction.Invoke(true);
     }
 
     private IEnumerator TakePathStep(Vector3 target, float stepDuration)
     {
-        Vector3 start = Character.transform.position;
+        Vector3 start = this.target.transform.position;
         FlipCharacterBasedOnDirection(target, start);
 
         bool jump = start.y != target.y;
@@ -189,7 +190,7 @@ public class CharacterMover : MonoBehaviour
         {
             stepDuration = jumpParams.duration;
             curve = jumpParams.floorBounce;
-            Character.ChangeAnimation("Jump");
+            this.target.ChangeAnimation("Jump");
         }
 
 
@@ -207,12 +208,12 @@ public class CharacterMover : MonoBehaviour
                     ? jumpParams.horizontalMovement.Evaluate(progress)
                     : moveParams.horizontalMovement.Evaluate(progress);
 
-            Character.transform.position =
+            this.target.transform.position =
                 Vector3.Lerp(start, target, horizontalProgress) + Vector3.up * yOffset;
             yield return null;
         }
 
-        Character.transform.position = target;
+        this.target.transform.position = target;
     }
 
     [Serializable]
@@ -236,9 +237,16 @@ public class CharacterMover : MonoBehaviour
     private void FlipCharacterBasedOnDirection(Vector3 target, Vector3 start)
     {
         Vector2Int direction = target.ToVector2IntXZ() - start.ToVector2IntXZ();
-        if (direction.Equals(Vector2Int.up)) Character.FlipCharacter(true);
-        else if (direction.Equals(Vector2Int.right)) Character.FlipCharacter(true);
-        else if (direction.Equals(Vector2Int.down)) Character.FlipCharacter(false);
-        else if (direction.Equals(Vector2Int.left)) Character.FlipCharacter(false);
+        if (direction.Equals(Vector2Int.up)) this.target.FlipCharacter(true);
+        else if (direction.Equals(Vector2Int.right)) this.target.FlipCharacter(true);
+        else if (direction.Equals(Vector2Int.down)) this.target.FlipCharacter(false);
+        else if (direction.Equals(Vector2Int.left)) this.target.FlipCharacter(false);
+    }
+
+    public void StartMove(Action<bool> toggleWindow, Character character)
+    {
+        returnAction = toggleWindow;
+        target = character;
+        MarkPossible();
     }
 }

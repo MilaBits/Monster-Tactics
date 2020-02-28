@@ -10,10 +10,14 @@ namespace Characters
     public class CharacterData : SerializedScriptableObject
     {
         [Header("Stats")]
-        public int damage;
+        public int MaxHealth;
 
+        public int Attack;
         public int defense;
         public int move;
+
+        [Space]
+        public int startPriority;
 
         [Range(0, 10), OnValueChanged("RoundHalf")]
         public float stepLayerLimit = .5f;
@@ -25,6 +29,5 @@ namespace Characters
 
         private void RoundHalf() =>
             stepLayerLimit = (float) Math.Round(stepLayerLimit * 2, MidpointRounding.AwayFromZero) / 2;
-
     }
 }

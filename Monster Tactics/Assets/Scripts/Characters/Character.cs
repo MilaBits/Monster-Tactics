@@ -8,6 +8,8 @@ namespace Characters
         [SerializeField, InlineEditor]
         private CharacterData characterData = default;
 
+        private int Health;
+
         public CharacterData Data() => characterData;
 
         private SpriteRenderer spriteRenderer;
@@ -20,7 +22,7 @@ namespace Characters
             animator = GetComponent<Animator>();
             animator.runtimeAnimatorController = Data().animatorController;
 
-            // animator.SetTrigger("Idle");
+            Health = Data().MaxHealth;
         }
 
         public void FlipCharacter(bool flip)

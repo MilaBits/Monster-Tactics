@@ -36,7 +36,13 @@
             <e p="CharacterData.cs" t="Include" />
           </e>
           <e p="Gameplay" t="Include">
+            <e p="ActionWindow.cs" t="Include" />
+            <e p="CameraController.cs" t="Include" />
             <e p="CharacterMover.cs" t="Include" />
+            <e p="GameUIManager.cs" t="Include" />
+            <e p="StatsBox.cs" t="Include" />
+            <e p="TurnList.cs" t="Include" />
+            <e p="TurnManager.cs" t="Include" />
           </e>
           <e p="Level" t="Include">
             <e p="Editor" t="Include">
@@ -52,6 +58,9 @@
             <e p="Waves.cs" t="Include" />
           </e>
           <e p="SimpleCameraController.cs" t="Include" />
+          <e p="UI" t="Include">
+            <e p="LabelValueField.cs" t="Include" />
+          </e>
           <e p="Utilities" t="Include">
             <e p="Extensions.cs" t="Include" />
             <e p="Unselectable.cs" t="Include" />

@@ -22,6 +22,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   damage: 0
+  startPriority: 1
   defense: 0
   move: 5
   stepLayerLimit: 1
