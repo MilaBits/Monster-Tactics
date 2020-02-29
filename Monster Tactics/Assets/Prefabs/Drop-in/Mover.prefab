@@ -45,52 +45,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character: {fileID: 0}
   moveParams:
-    duration: 0.5
+    duration: 0
     horizontalMovement:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     verticalMovement:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -102,10 +66,10 @@ MonoBehaviour:
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 34
+        tangentMode: 0
         weightedMode: 0
         inWeight: 0
-        outWeight: 0.33333334
+        outWeight: 0
       - serializedVersion: 3
         time: 0.2532013
         value: 0
@@ -233,16 +197,16 @@ MonoBehaviour:
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
-        outWeight: 0.026069265
+        outWeight: 0
       - serializedVersion: 3
         time: 0.63
         value: 0
         inSlope: -0
-        outSlope: -1.4234406
-        tangentMode: 5
+        outSlope: 0
+        tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.013008788
+        inWeight: 0
+        outWeight: 0
       - serializedVersion: 3
         time: 0.8070569
         value: -0.1396216
@@ -264,7 +228,5 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  ArrowMarkerPrefab: {fileID: 280187413222294778, guid: c72f4e8506b7ce247ac6569d66f3471e,
-    type: 3}
-  LineMarkerPrefab: {fileID: 1552731186782641461, guid: 1adc6c142ca2eeb4f9f608ca4a7668fb,
-    type: 3}
+  ArrowMarkerPrefab: {fileID: 0}
+  LineMarkerPrefab: {fileID: 0}
