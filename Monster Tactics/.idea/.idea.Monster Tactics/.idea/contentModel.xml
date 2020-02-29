@@ -40,6 +40,8 @@
             <e p="CameraController.cs" t="Include" />
             <e p="CharacterMover.cs" t="Include" />
             <e p="GameUIManager.cs" t="Include" />
+            <e p="MoveParams.cs" t="Include" />
+            <e p="PathfindingClear.cs" t="Include" />
             <e p="StatsBox.cs" t="Include" />
             <e p="TurnList.cs" t="Include" />
             <e p="TurnManager.cs" t="Include" />
@@ -59,7 +61,10 @@
           </e>
           <e p="SimpleCameraController.cs" t="Include" />
           <e p="UI" t="Include">
+            <e p="ConfirmationDialog.cs" t="Include" />
+            <e p="DialogResult.cs" t="Include" />
             <e p="LabelValueField.cs" t="Include" />
+            <e p="LineSegment.cs" t="Include" />
           </e>
           <e p="Utilities" t="Include">
             <e p="Extensions.cs" t="Include" />

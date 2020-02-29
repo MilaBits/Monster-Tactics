@@ -23,14 +23,6 @@ namespace Gameplay
 
         public TurnList TurnList => turnList;
 
-        // private TurnManager turnManager;
-
-        private void Start()
-        {
-            // turnManager = FindObjectOfType<TurnManager>();
-            // if (!turnManager) Debug.LogWarning("No Turn Manager present in scene!");
-        }
-
         public void ChangeTarget(Character newTarget, List<Character> turnOrder)
         {
             target = newTarget;

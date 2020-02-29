@@ -161,6 +161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae921e24fcce48dab78db27bb79fd01d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogPrefab: {fileID: 7080073745851975899, guid: 456c98e7c2214e54db9daa2a61e8a7ca,
+    type: 3}
   MoveButton: {fileID: 4883482328447606234}
 --- !u!1001 &4408015108899809199
 PrefabInstance:

@@ -5,6 +5,7 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using Utilities;
 
 namespace Level
 {
@@ -30,7 +31,9 @@ namespace Level
 
         public PathfindingData pathFindingData;
 
-        public Vector3 PositionWithHeight() => transform.position + Vector3.up * height;
+
+        public Vector2Int PositionVector2Int => transform.position.ToVector2IntXZ();
+        public Vector3 PositionWithHeight => transform.position + Vector3.up * height;
 
         public struct PathfindingData
         {
@@ -118,7 +121,7 @@ namespace Level
 
         public bool Equals(QuadTile other) => transform.position == other.transform.position;
 
-        public List<QuadTile> ChainToList()
+        public List<QuadTile> Path()
         {
             List<QuadTile> tiles = new List<QuadTile>();
 
@@ -130,6 +133,7 @@ namespace Level
                 current = current.pathFindingData.cameFrom;
             }
 
+            tiles.Reverse();
             return tiles;
         }
 

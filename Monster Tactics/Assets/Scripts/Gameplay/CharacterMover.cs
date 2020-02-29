@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Characters;
+using Gameplay;
 using Level;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
@@ -18,48 +19,40 @@ public class CharacterMover : MonoBehaviour
 
     [Space]
     [SerializeField]
-    private MoveParams moveParams = default;
+    private LineSegment ArrowPrefab = default;
 
     [SerializeField]
-    private MoveParams jumpParams = default;
+    private LineSegment LinePrefab = default;
 
-    [Space]
-    [SerializeField]
-    private GameObject ArrowMarkerPrefab = default;
-
-    [SerializeField]
-    private GameObject LineMarkerPrefab = default;
-
-    private Queue<GameObject> LinePool = new Queue<GameObject>();
-    private List<GameObject> visibleLines = new List<GameObject>();
-    private GameObject Arrow;
+    private Queue<LineSegment> LinePool = new Queue<LineSegment>();
+    private List<LineSegment> visibleLines = new List<LineSegment>();
+    private LineSegment Arrow;
 
     private bool moving = false;
 
     private List<QuadTile> oldPath;
+    public bool StopUpdatingPath = false;
 
-    private Action<bool, bool> returnAction;
-
-    private GameObject GetLineSegmentFromPool()
+    private LineSegment GetLineSegmentFromPool()
     {
-        if (LinePool.Count < 1) LinePool.Enqueue(Instantiate(LineMarkerPrefab));
-        GameObject lineSegment = LinePool.Dequeue();
-        lineSegment.SetActive(true);
+        if (LinePool.Count < 1) LinePool.Enqueue(Instantiate(LinePrefab));
+        LineSegment lineSegment = LinePool.Dequeue();
+        lineSegment.gameObject.SetActive(true);
         visibleLines.Add(lineSegment);
         return lineSegment;
     }
 
-    private void StoreLineSegmentInPool(GameObject lineSegment)
+    private void StoreLineSegmentInPool(LineSegment lineSegment)
     {
-        lineSegment.SetActive(false);
+        lineSegment.name = "pooledSegment";
+        lineSegment.gameObject.SetActive(false);
         LinePool.Enqueue(lineSegment);
     }
 
     void Start()
     {
-        Arrow = Instantiate(ArrowMarkerPrefab);
-        Arrow.SetActive(false);
-
+        Arrow = Instantiate(ArrowPrefab);
+        Arrow.gameObject.SetActive(false);
         tileMap = FindObjectOfType<QuadTileMap>();
     }
 
@@ -75,163 +68,126 @@ public class CharacterMover : MonoBehaviour
         }
     }
 
-    private void Update()
+    public QuadTile GetTarget()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, 100, LayerMask.GetMask("Viable Marker")))
         {
-            if (!moving)
-            {
-                List<QuadTile> path = hit.transform.GetComponentInParent<QuadTile>().ChainToList();
+            return hit.transform.GetComponentInParent<QuadTile>();
+        }
 
-                if (oldPath == path)
-                {
-                    return;
-                }
+        return null;
+    }
 
+    private void Update()
+    {
+        if (StopUpdatingPath) return;
 
-                path.Reverse();
-                DrawPath(hit.transform.GetComponentInParent<QuadTile>());
-
-                if (Input.GetButtonDown("Fire1"))
-                {
-                    ClearPossible();
-                    Move(path);
-                }
-
-                oldPath = path;
-            }
+        QuadTile target = GetTarget();
+        if (target)
+        {
+            DrawPath(target);
         }
     }
 
-    private void ClearPossible() => tileMap.GetTiles().ForEach(x => x.Value.ToggleViableMarker(false));
+    private QuadTile oldTarget;
 
     private void DrawPath(QuadTile target)
     {
-        List<QuadTile> path = target.ChainToList();
-        path.Reverse();
+        if (target == oldTarget) return;
+        oldTarget = target;
 
-        ClearLines();
+        List<QuadTile> path = target.Path();
 
-        Arrow.SetActive(true);
-        Arrow.transform.position = target.PositionWithHeight();
-        RotateMarkerBasedOnDirection(Arrow.transform,
-            target.transform.position.ToVector2IntXZ(),
-            target.pathFindingData.cameFrom.transform.position.ToVector2IntXZ());
+        Clear(PathfindingClear.Path);
+
+        Arrow.gameObject.SetActive(true);
+        Arrow.transform.position = path[path.Count - 1].PositionWithHeight;
+        Arrow.transform.SetParent(path[path.Count - 1].transform);
+        Arrow.UpdateSegment(path[path.Count - 1].pathFindingData.cameFrom.PositionWithHeight, Vector3.zero);
+
         for (int i = 0; i < path.Count - 1; i++)
         {
-            GameObject segment = GetLineSegmentFromPool();
-            segment.transform.position = path[i].PositionWithHeight();
-            segment.name = $"segment {i}.{1}";
-            RotateMarkerBasedOnDirection(segment.transform,
-                path[i].transform.position.ToVector2IntXZ(),
-                path[i].pathFindingData.cameFrom.transform.position.ToVector2IntXZ());
+            LineSegment segment = GetLineSegmentFromPool();
 
-            GameObject segment2 = GetLineSegmentFromPool();
-            segment2.transform.position = path[i].PositionWithHeight();
-            segment2.name = $"segment {i}.{2}";
-            RotateMarkerBasedOnDirection(segment2.transform,
-                path[i].transform.position.ToVector2IntXZ(),
-                path[i + 1].transform.position.ToVector2IntXZ());
+            segment.transform.position = path[i].PositionWithHeight;
+            segment.transform.SetParent(path[i].transform);
+            segment.name = "Segment " + i;
+            segment.UpdateSegment(path[i].pathFindingData.cameFrom.PositionWithHeight, path[i + 1].PositionWithHeight);
         }
     }
 
-    private void ClearLines()
+    public void Clear(PathfindingClear clear)
     {
-        Arrow.SetActive(false);
-        foreach (GameObject visibleLine in visibleLines)
+        switch (clear)
         {
+            case PathfindingClear.Path:
+                ClearPath();
+                break;
+            case PathfindingClear.Possible:
+                tileMap.ResetPathfindingData();
+                break;
+            case PathfindingClear.Both:
+                ClearPath();
+                tileMap.ResetPathfindingData();
+                break;
+        }
+    }
+
+    private void ClearPath()
+    {
+        Arrow.gameObject.SetActive(false);
+        for (int i = visibleLines.Count - 1; i >= 0; i--)
+        {
+            LineSegment visibleLine = visibleLines[i];
+            visibleLines.Remove(visibleLine);
             StoreLineSegmentInPool(visibleLine);
         }
     }
 
-    private void RotateMarkerBasedOnDirection(Transform marker, Vector2Int curr, Vector2Int prev)
-    {
-        Vector2Int dir = curr - prev;
-        if (dir.Equals(Vector2Int.up)) marker.rotation = Quaternion.Euler(0, 180, 0);
-        else if (dir.Equals(Vector2Int.right)) marker.rotation = Quaternion.Euler(0, 270, 0);
-        else if (dir.Equals(Vector2Int.down)) marker.rotation = Quaternion.Euler(0, 0, 0);
-        else if (dir.Equals(Vector2Int.left)) marker.rotation = Quaternion.Euler(0, 90, 0);
-    }
-
-    private void Move(List<QuadTile> path) => StartCoroutine(MoveAlongPath(path, moveParams.duration));
-
-    private IEnumerator MoveAlongPath(List<QuadTile> path, float stepTime)
+    public IEnumerator Move(List<QuadTile> path, MoveParams moveParams, MoveParams jumpParams)
     {
         moving = true;
+        Clear(PathfindingClear.Possible);
+
         target.ChangeAnimation("Walk");
         for (int i = 0; i < path.Count; i++)
         {
             yield return StartCoroutine(
-                TakePathStep(path[i].PositionWithHeight(), stepTime));
+                TakePathStep(path[i].PositionWithHeight, moveParams, jumpParams));
         }
 
-        ClearLines();
         target.ChangeAnimation("Idle");
         target.FlipCharacter(false);
         moving = false;
-        returnAction.Invoke(true, false);
     }
 
-    private IEnumerator TakePathStep(Vector3 target, float stepDuration)
+    private IEnumerator TakePathStep(Vector3 target, MoveParams moveParams, MoveParams jumpParams)
     {
         Vector3 start = this.target.transform.position;
         FlipCharacterBasedOnDirection(target, start);
 
         bool jump = start.y != target.y;
+        MoveParams usedParams = jump ? jumpParams : moveParams;
+        if (jump) this.target.ChangeAnimation("Jump");
+
+        // Make stepped on tile bounce
+        tileMap.GetTile(target.ToVector2IntXZ()).PushDown(usedParams.floorBounce);
 
         float progress;
-
-        AnimationCurve curve = moveParams.floorBounce;
-
-        if (jump)
+        for (float elapsed = 0; elapsed < usedParams.Duration; elapsed += Time.deltaTime)
         {
-            stepDuration = jumpParams.duration;
-            curve = jumpParams.floorBounce;
-            this.target.ChangeAnimation("Jump");
-        }
+            progress = elapsed / usedParams.Duration;
+            float yOffset = usedParams.verticalMovement.Evaluate(progress);
+            float horizontalProgress = usedParams.horizontalMovement.Evaluate(progress);
 
-
-        tileMap.GetTile(target.ToVector2IntXZ()).PushDown(curve);
-
-        for (float elapsed = 0; elapsed < stepDuration; elapsed += Time.deltaTime)
-        {
-            progress = elapsed / stepDuration;
-            float yOffset =
-                jump
-                    ? jumpParams.verticalMovement.Evaluate(progress)
-                    : 0;
-            float horizontalProgress =
-                jump
-                    ? jumpParams.horizontalMovement.Evaluate(progress)
-                    : moveParams.horizontalMovement.Evaluate(progress);
-
-            this.target.transform.position =
-                Vector3.Lerp(start, target, horizontalProgress) + Vector3.up * yOffset;
+            this.target.transform.position = Vector3.Lerp(start, target, horizontalProgress) + Vector3.up * yOffset;
             yield return null;
         }
 
         this.target.transform.position = target;
-    }
-
-    [Serializable]
-    private struct MoveParams
-    {
-        public float duration;
-        public AnimationCurve horizontalMovement;
-        public AnimationCurve verticalMovement;
-        public AnimationCurve floorBounce;
-
-        public MoveParams(float duration, AnimationCurve horizontalMovement,
-            AnimationCurve verticalMovement, AnimationCurve floorBounce)
-        {
-            this.duration = duration;
-            this.horizontalMovement = horizontalMovement;
-            this.verticalMovement = verticalMovement;
-            this.floorBounce = floorBounce;
-        }
     }
 
     private void FlipCharacterBasedOnDirection(Vector3 target, Vector3 start)
@@ -243,9 +199,8 @@ public class CharacterMover : MonoBehaviour
         else if (direction.Equals(Vector2Int.left)) this.target.FlipCharacter(false);
     }
 
-    public void StartMove(Action<bool, bool> toggleWindow, Character character)
+    public void ShowPossible(Character character)
     {
-        returnAction = toggleWindow;
         target = character;
         MarkPossible();
     }

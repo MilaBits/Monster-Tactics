@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Gameplay;
 using Sirenix.OdinInspector;
 using UnityEditor.Animations;
 using UnityEngine;
@@ -17,6 +18,12 @@ namespace Characters
         public int Attack;
         public int defense;
         public int move;
+
+        [Space]
+        public MoveParams moveParams = default;
+
+        public MoveParams rushParams = default;
+        public MoveParams jumpParams = default;
 
         [Space]
         public int startPriority;

@@ -89,7 +89,7 @@ namespace Level
             }).ToList();
         }
 
-        private void ResetPathfindingData()
+        public void ResetPathfindingData()
         {
             foreach (KeyValuePair<Vector2Int, QuadTile> keyValuePair in GetTiles())
             {
