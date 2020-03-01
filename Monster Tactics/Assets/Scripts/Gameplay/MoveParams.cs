@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Gameplay
@@ -7,15 +7,21 @@ namespace Gameplay
     [Serializable]
     public struct MoveParams
     {
-        public AnimationCurve horizontalMovement;
-        public AnimationCurve verticalMovement;
-        public AnimationCurve floorBounce;
+        public float duration;
 
-        public float Duration => horizontalMovement.keys.Last().time;
+        [HideLabel, SuffixLabel("Horizontal Movement", true)]
+        public AnimationCurve horizontalMovement;
+
+        [HideLabel, SuffixLabel("Vertical Movement", true)]
+        public AnimationCurve verticalMovement;
+
+        [HideLabel, SuffixLabel("Floor Bounce", true)]
+        public AnimationCurve floorBounce;
 
         public MoveParams(float duration, AnimationCurve horizontalMovement,
             AnimationCurve verticalMovement, AnimationCurve floorBounce)
         {
+            this.duration = duration;
             this.horizontalMovement = horizontalMovement;
             this.verticalMovement = verticalMovement;
             this.floorBounce = floorBounce;

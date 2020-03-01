@@ -176,10 +176,9 @@ public class CharacterMover : MonoBehaviour
         // Make stepped on tile bounce
         tileMap.GetTile(target.ToVector2IntXZ()).PushDown(usedParams.floorBounce);
 
-        float progress;
-        for (float elapsed = 0; elapsed < usedParams.Duration; elapsed += Time.deltaTime)
+        for (float elapsed = 0; elapsed < usedParams.duration; elapsed += Time.deltaTime)
         {
-            progress = elapsed / usedParams.Duration;
+            float progress = elapsed / usedParams.duration;
             float yOffset = usedParams.verticalMovement.Evaluate(progress);
             float horizontalProgress = usedParams.horizontalMovement.Evaluate(progress);
 

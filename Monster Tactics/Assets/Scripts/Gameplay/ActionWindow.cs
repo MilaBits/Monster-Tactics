@@ -72,7 +72,8 @@ namespace Gameplay
             {
                 Destroy(dialog.gameObject);
                 CharacterData data = turnManager.CurrentCharacter.Data();
-                yield return StartCoroutine(mover.Move(target.Path(), data.moveParams, data.jumpParams));
+                MoveParams moveParams = moved ? data.rushParams : data.moveParams;
+                yield return StartCoroutine(mover.Move(target.Path(), moveParams, data.jumpParams));
                 moveCost++;
 
                 if (moved) MoveButton.interactable = false;
