@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Characters
@@ -24,6 +25,11 @@ namespace Characters
             animator.runtimeAnimatorController = Data().animatorController;
 
             health = Data().MaxHealth;
+        }
+
+        private void Update()
+        {
+            spriteRenderer.transform.rotation = Camera.main.transform.rotation;
         }
 
         public void FlipCharacter(bool flip) => spriteRenderer.flipX = flip;

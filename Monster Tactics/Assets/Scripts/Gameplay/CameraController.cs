@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Gameplay
@@ -8,6 +10,84 @@ namespace Gameplay
     {
         [SerializeField]
         private AnimationCurve SwitchTargetCurve;
+
+        [SerializeField]
+        private AnimationCurve PivotCurve;
+
+        [SerializeField]
+        private float horizontalIncrement = 45;
+
+        [SerializeField]
+        private float verticalSteps = 3;
+
+        [SerializeField, MinMaxSlider(0, 90, true)]
+        private Vector2 verticalLimits = new Vector2();
+
+        private float verticalIncrement => (verticalLimits.y - verticalLimits.x) / verticalSteps;
+
+        [SerializeField, MinMaxSlider(1, 10, true)]
+        private Vector2Int zoomLimits = new Vector2Int();
+
+        private Transform pivot;
+        private Camera camera;
+        private bool pivoting;
+
+        private void Awake()
+        {
+            pivot = transform.GetChild(0);
+            camera = GetComponentInChildren<Camera>();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow)) CameraMove(CameraDirection.Up);
+            if (Input.GetKeyDown(KeyCode.DownArrow)) CameraMove(CameraDirection.Down);
+            if (Input.GetKeyDown(KeyCode.LeftArrow)) CameraMove(CameraDirection.Left);
+            if (Input.GetKeyDown(KeyCode.RightArrow)) CameraMove(CameraDirection.Right);
+            if (Input.GetAxis("Mouse ScrollWheel") < 0) CameraMove(CameraDirection.ZoomIn);
+            if (Input.GetAxis("Mouse ScrollWheel") > 0) CameraMove(CameraDirection.ZoomOut);
+        }
+
+        private void CameraMove(CameraDirection direction)
+        {
+            Vector3 rotation = pivot.rotation.eulerAngles;
+            int targetZoom;
+            switch (direction)
+            {
+                case CameraDirection.Up:
+                    rotation.x = Mathf.Clamp(rotation.x + verticalIncrement, verticalLimits.x, verticalLimits.y);
+                    break;
+                case CameraDirection.Down:
+                    rotation.x = Mathf.Clamp(rotation.x - verticalIncrement, verticalLimits.x, verticalLimits.y);
+                    break;
+                case CameraDirection.Left:
+                    rotation.y += horizontalIncrement;
+                    break;
+                case CameraDirection.Right:
+                    rotation.y -= horizontalIncrement;
+                    break;
+                case CameraDirection.ZoomIn:
+                    targetZoom = (int) Mathf.Clamp(camera.orthographicSize + 1, zoomLimits.x, zoomLimits.y);
+                    StartCoroutine(ZoomSmooth(targetZoom));
+                    break;
+                case CameraDirection.ZoomOut:
+                    targetZoom = (int) Mathf.Clamp(camera.orthographicSize - 1, zoomLimits.x, zoomLimits.y);
+                    StartCoroutine(ZoomSmooth(targetZoom));
+                    break;
+            }
+
+            if (!pivoting) StartCoroutine(PivotCamera(Quaternion.Euler(rotation)));
+        }
+
+        enum CameraDirection
+        {
+            Up,
+            Down,
+            Left,
+            Right,
+            ZoomIn,
+            ZoomOut
+        }
 
         public IEnumerator SwitchTarget(Transform target)
         {
@@ -23,6 +103,37 @@ namespace Gameplay
 
             transform.position = target.position;
             transform.SetParent(target);
+        }
+
+        public IEnumerator PivotCamera(Quaternion target)
+        {
+            pivoting = true;
+            Quaternion start = pivot.rotation;
+            float duration = PivotCurve.keys.Last().time;
+            for (float elapsed = 0; elapsed < duration; elapsed += Time.deltaTime)
+            {
+                pivot.rotation =
+                    Quaternion.Lerp(start, target, PivotCurve.Evaluate(elapsed / duration));
+                yield return null;
+            }
+
+            pivot.rotation = target;
+            pivoting = false;
+        }
+
+        public IEnumerator ZoomSmooth(int target)
+        {
+            float start = camera.orthographicSize;
+            float duration = PivotCurve.keys.Last().time;
+            for (float elapsed = 0; elapsed < duration; elapsed += Time.deltaTime)
+            {
+                camera.orthographicSize =
+                    Mathf.Lerp(start, target, PivotCurve.Evaluate(elapsed / duration));
+                yield return null;
+            }
+
+            camera.orthographicSize = target;
+            pivoting = false;
         }
     }
 }

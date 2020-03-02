@@ -87,14 +87,12 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/TurnList.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UI/Label Value Field.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/StatsBox.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CameraController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/TurnManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharMover.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Characters/CharacterData.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogResult.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/GameUIManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UI/ConfirmationDialog.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Characters/Character.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTile.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileMap.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/PathfindingClearType.cs" />
@@ -102,6 +100,8 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/ActionWindow.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterMover.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/MoveParams.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Characters/Character.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CameraController.cs" />
       </list>
     </option>
   </component>
@@ -257,11 +257,11 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="616" y="258" width="672" height="677" key="run.anything.popup/0.30.1920.1050/-1920.30.1920.1050@0.30.1920.1050" timestamp="1582993102619" />
-    <state x="623" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1582985303110">
+    <state x="623" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1583187819737">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="-1297" y="257" width="672" height="678" key="search.everywhere.popup/0.30.1920.1050/-1920.30.1920.1050@-1920.30.1920.1050" timestamp="1580948629348" />
-    <state x="623" y="257" width="672" height="678" key="search.everywhere.popup/0.30.1920.1050/-1920.30.1920.1050@0.30.1920.1050" timestamp="1582985303110" />
+    <state x="623" y="257" width="672" height="678" key="search.everywhere.popup/0.30.1920.1050/-1920.30.1920.1050@0.30.1920.1050" timestamp="1583187819737" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
