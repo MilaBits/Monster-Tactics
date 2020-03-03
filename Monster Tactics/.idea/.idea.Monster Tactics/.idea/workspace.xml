@@ -98,10 +98,10 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/PathfindingClearType.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UI/LineSegment.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/ActionWindow.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterMover.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/MoveParams.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Characters/Character.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CameraController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Characters/Character.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterMover.cs" />
       </list>
     </option>
   </component>

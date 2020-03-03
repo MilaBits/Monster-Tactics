@@ -33,6 +33,7 @@ public class CharacterMover : MonoBehaviour
     private List<QuadTile> oldPath;
     public bool StopUpdatingPath = false;
 
+
     private LineSegment GetLineSegmentFromPool()
     {
         if (LinePool.Count < 1) LinePool.Enqueue(Instantiate(LinePrefab));
@@ -149,6 +150,7 @@ public class CharacterMover : MonoBehaviour
 
     public IEnumerator Move(List<QuadTile> path, MoveParams moveParams, MoveParams jumpParams)
     {
+        target.moving = true;
         moving = true;
         Clear(PathfindingClear.Possible);
 
@@ -160,14 +162,14 @@ public class CharacterMover : MonoBehaviour
         }
 
         target.ChangeAnimation("Idle");
-        target.FlipCharacter(false);
         moving = false;
+        target.moving = false;
+        target.ResetFlip();
     }
 
     private IEnumerator TakePathStep(Vector3 target, MoveParams moveParams, MoveParams jumpParams)
     {
         Vector3 start = this.target.transform.position;
-        FlipCharacterBasedOnDirection(target, start);
 
         bool jump = start.y != target.y;
         MoveParams usedParams = jump ? jumpParams : moveParams;
@@ -187,15 +189,6 @@ public class CharacterMover : MonoBehaviour
         }
 
         this.target.transform.position = target;
-    }
-
-    private void FlipCharacterBasedOnDirection(Vector3 target, Vector3 start)
-    {
-        Vector2Int direction = target.ToVector2IntXZ() - start.ToVector2IntXZ();
-        if (direction.Equals(Vector2Int.up)) this.target.FlipCharacter(true);
-        else if (direction.Equals(Vector2Int.right)) this.target.FlipCharacter(true);
-        else if (direction.Equals(Vector2Int.down)) this.target.FlipCharacter(false);
-        else if (direction.Equals(Vector2Int.left)) this.target.FlipCharacter(false);
     }
 
     public void ShowPossible(Character character)
