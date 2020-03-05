@@ -134,7 +134,6 @@ public class CharacterMover : MonoBehaviour
 
     public IEnumerator Move(List<QuadTile> path, MoveParams moveParams, MoveParams jumpParams)
     {
-        target.moving = true;
         Clear(PathfindingClear.Possible);
 
         target.ChangeAnimation(moveParams.animatorTrigger);
@@ -145,7 +144,6 @@ public class CharacterMover : MonoBehaviour
         }
 
         target.ChangeAnimation("Idle");
-        target.moving = false;
         target.ResetFlip();
         StopUpdatingPath = true;
     }
@@ -154,9 +152,12 @@ public class CharacterMover : MonoBehaviour
     {
         Vector3 start = this.target.transform.position;
 
+        // flip character the right way
         Vector3 localDirection =
             Camera.main.transform.InverseTransformDirection(this.target.transform.position - target).normalized;
         this.target.FlipCharacter(localDirection.x < 0);
+
+        this.target.ChangeAnimation(moveParams.animatorTrigger);
 
         bool jump = start.y != target.y;
         MoveParams usedParams = jump ? jumpParams : moveParams;

@@ -99,11 +99,11 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/Extensions.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileMap.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterAttacker.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Characters/Character.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/ActionWindow.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CameraController.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterMover.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/MoveParams.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Characters/Character.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterMover.cs" />
       </list>
     </option>
   </component>
