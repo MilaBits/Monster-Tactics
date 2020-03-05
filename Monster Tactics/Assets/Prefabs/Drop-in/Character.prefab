@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterData: {fileID: 11400000, guid: 9d4a636cec7488c4db84b37bb442def6, type: 2}
+  moving: 0
 --- !u!95 &1785555853124133401
 Animator:
   serializedVersion: 3
@@ -136,13 +137,13 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: -2769423899070989229, guid: 03323e64d96119c46afcf2ef474b2d1e,
+  m_Sprite: {fileID: -2769423899070989229, guid: a349864f393b63f42a15741b710dc404,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.5833334, y: 1.3333334}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

@@ -8,10 +8,10 @@ namespace Gameplay
     public class CameraController : MonoBehaviour
     {
         [SerializeField]
-        private AnimationCurve SwitchTargetCurve= default;
+        private AnimationCurve SwitchTargetCurve = default;
 
         [SerializeField]
-        private AnimationCurve PivotCurve= default;
+        private AnimationCurve PivotCurve = default;
 
         [SerializeField]
         private float horizontalIncrement = 45;
@@ -39,6 +39,7 @@ namespace Gameplay
 
         private void Update()
         {
+            if (pivoting) return;
             if (Input.GetKeyDown(KeyCode.UpArrow)) CameraMove(CameraDirection.Up);
             if (Input.GetKeyDown(KeyCode.DownArrow)) CameraMove(CameraDirection.Down);
             if (Input.GetKeyDown(KeyCode.LeftArrow)) CameraMove(CameraDirection.Left);
@@ -122,6 +123,7 @@ namespace Gameplay
 
         public IEnumerator ZoomSmooth(int target)
         {
+            pivoting = true;
             float start = gameCamera.orthographicSize;
             float duration = PivotCurve.keys.Last().time;
             for (float elapsed = 0; elapsed < duration; elapsed += Time.deltaTime)

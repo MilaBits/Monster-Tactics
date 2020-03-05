@@ -66,7 +66,6 @@ namespace Gameplay
                 attacker.Attack(target);
                 turnManager.CurrentCharacter.LoseActionPoints(attackCost);
                 attackCost++;
-                AttackButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Attack ({attackCost})";
 
                 if (moved) MoveButton.interactable = false;
                 moved = true;
@@ -140,12 +139,11 @@ namespace Gameplay
         {
             attackCost = 1;
             AttackButton.interactable = true;
-            AttackButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Attack ({attackCost})";
 
             moveCost = 1;
             MoveButton.interactable = true;
             moved = false;
-            MoveButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Move ({moveCost})";
+            MoveButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Move";
         }
 
         public void Wait()
@@ -159,8 +157,7 @@ namespace Gameplay
             if (reset) ResetWindow();
             transform.GetChild(0).gameObject.SetActive(toggle);
 
-            if (moved) MoveButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Rush ({moveCost})";
-            AttackButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Attack ({attackCost})";
+            if (moved) MoveButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Rush";
 
             if (toggle && moveCost > turnManager.CurrentCharacter.ActionPoints()) MoveButton.interactable = false;
             if (toggle && attackCost > turnManager.CurrentCharacter.ActionPoints()) AttackButton.interactable = false;
