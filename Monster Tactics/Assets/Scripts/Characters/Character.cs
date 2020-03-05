@@ -37,23 +37,23 @@ namespace Characters
         private void Update()
         {
             spriteRenderer.transform.rotation = Camera.main.transform.rotation;
-            FlipCharacterBasedOnDirection();
+            // FlipCharacterBasedOnDirection();
         }
 
-        private void FlipCharacterBasedOnDirection()
-        {
-            if (!moving) return;
-            Vector3 cameraPos = Camera.main.transform.position;
-            Vector3 localDirection = transform.InverseTransformDirection(cameraPos - oldCameraPos).normalized;
-            oldCameraPos = cameraPos;
+        // private void FlipCharacterBasedOnDirection()
+        // {
+        //     if (!moving) return;
+        //     Vector3 cameraPos = Camera.main.transform.position;
+        //     Vector3 localDirection = transform.InverseTransformDirection(cameraPos - oldCameraPos).normalized;
+        //     oldCameraPos = cameraPos;
+        //
+        //     
+        //         FlipCharacter(localDirection.x > 0);
+        //     
+        //     
+        // }
 
-            
-                FlipCharacter(localDirection.x > 0);
-            
-            
-        }
-
-        private void FlipCharacter(bool flip) => spriteRenderer.flipX = flip;
+        public void FlipCharacter(bool flip) => spriteRenderer.flipX = flip;
         public void ResetFlip() => spriteRenderer.flipX = flippedByDefault;
 
         public void ChangeAnimation(string animation) => animator.SetTrigger(animation);

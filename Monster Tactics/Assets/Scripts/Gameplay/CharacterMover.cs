@@ -79,7 +79,6 @@ public class CharacterMover : MonoBehaviour
         }
     }
 
-
     private void DrawPath(QuadTile target)
     {
         if (target == oldTarget) return;
@@ -154,6 +153,10 @@ public class CharacterMover : MonoBehaviour
     private IEnumerator TakePathStep(Vector3 target, MoveParams moveParams, MoveParams jumpParams)
     {
         Vector3 start = this.target.transform.position;
+
+        Vector3 localDirection =
+            Camera.main.transform.InverseTransformDirection(this.target.transform.position - target).normalized;
+        this.target.FlipCharacter(localDirection.x < 0);
 
         bool jump = start.y != target.y;
         MoveParams usedParams = jump ? jumpParams : moveParams;

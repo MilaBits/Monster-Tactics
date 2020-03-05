@@ -22,7 +22,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   MaxHealth: 20
-  MaxActionPoints: 3
+  MaxActionPoints: 6
   Attack: 3
   AttackRange: 2
   defense: 3

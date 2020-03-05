@@ -139,12 +139,13 @@ namespace Gameplay
         private void ResetWindow()
         {
             attackCost = 1;
+            AttackButton.interactable = true;
+            AttackButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Attack ({attackCost})";
 
             moveCost = 1;
             MoveButton.interactable = true;
             moved = false;
             MoveButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Move ({moveCost})";
-            AttackButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Attack ({attackCost})";
         }
 
         public void Wait()
