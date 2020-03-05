@@ -27,7 +27,7 @@ public class TurnManager : MonoBehaviour
         gameUiManager = FindObjectOfType<GameUIManager>();
         if (!gameUiManager) Debug.LogWarning("No Game UI Manager present in scene!");
 
-        Characters = new Queue<Character>(FindObjectsOfType<Character>().OrderBy(x => x.Data().startPriority));
+        Characters = new Queue<Character>(FindObjectsOfType<Character>().OrderBy(x => x.Data.startPriority));
 
         StartCoroutine(StartTurn());
     }

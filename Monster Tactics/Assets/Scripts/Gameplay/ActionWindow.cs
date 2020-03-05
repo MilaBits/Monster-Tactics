@@ -12,35 +12,83 @@ namespace Gameplay
     public class ActionWindow : MonoBehaviour
     {
         [SerializeField, Required]
-        private TurnManager turnManager;
+        private TurnManager turnManager = default;
 
         [SerializeField, Required]
-        private CharacterMover mover;
+        private CharacterMover mover = default;
 
         [SerializeField, Required]
-        private ConfirmationDialog dialogPrefab;
+        private CharacterAttacker attacker = default;
 
         [SerializeField, Required]
-        private Button MoveButton;
+        private ConfirmationDialog dialogPrefab = default;
+
+        [SerializeField, Required]
+        private Button MoveButton = default;
+
+        [SerializeField, Required]
+        private Button AttackButton = default;
+
+        private int attackCost = 1;
 
         private int moveCost = 1;
-
         private bool moved;
+
+        public void ButtonAttack() => StartCoroutine(Attack());
+
+        public IEnumerator Attack()
+        {
+            attacker.ShowPossible(turnManager.CurrentCharacter);
+
+            ToggleWindow(false, false);
+
+            QuadTile target = null;
+
+            while (!target)
+            {
+                if (Input.GetButtonDown("Fire1")) target = QuadTileMap.GetTarget();
+                yield return null;
+            }
+
+            ConfirmationDialog dialog = Instantiate(dialogPrefab, transform.parent);
+
+            // Wait for dialog input
+            while (dialog.Result == DialogResult.None)
+            {
+                yield return null;
+            }
+
+            if (dialog.Result == DialogResult.Yes)
+            {
+                Destroy(dialog.gameObject);
+
+                CharacterData data = turnManager.CurrentCharacter.Data;
+                attacker.Attack(target);
+                turnManager.CurrentCharacter.LoseActionPoints(attackCost);
+                attackCost++;
+                AttackButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Attack ({attackCost})";
+
+                if (moved) MoveButton.interactable = false;
+                moved = true;
+            }
+            else
+            {
+                Destroy(dialog.gameObject);
+            }
+
+            attacker.Clear();
+            ToggleWindow(true, false);
+        }
 
         private void ShowMove()
         {
             if (!moved && turnManager.CurrentCharacter.ActionPoints() >= moveCost)
-            {
                 mover.ShowPossible(turnManager.CurrentCharacter);
-            }
             else if (moved && turnManager.CurrentCharacter.ActionPoints() >= moveCost)
-            {
                 mover.ShowPossible(turnManager.CurrentCharacter);
-            }
         }
 
         public void ButtonMove() => StartCoroutine(Move());
-
 
         public IEnumerator Move()
         {
@@ -53,7 +101,7 @@ namespace Gameplay
             // Wait for click
             while (!target)
             {
-                if (Input.GetButtonDown("Fire1")) target = mover.GetTarget();
+                if (Input.GetButtonDown("Fire1")) target = QuadTileMap.GetTarget();
                 yield return null;
             }
 
@@ -67,13 +115,13 @@ namespace Gameplay
                 yield return null;
             }
 
-
             if (dialog.Result == DialogResult.Yes)
             {
                 Destroy(dialog.gameObject);
-                CharacterData data = turnManager.CurrentCharacter.Data();
+                CharacterData data = turnManager.CurrentCharacter.Data;
                 MoveParams moveParams = moved ? data.rushParams : data.moveParams;
                 yield return StartCoroutine(mover.Move(target.Path(), moveParams, data.jumpParams));
+                turnManager.CurrentCharacter.LoseActionPoints(moveCost);
                 moveCost++;
 
                 if (moved) MoveButton.interactable = false;
@@ -84,17 +132,19 @@ namespace Gameplay
                 Destroy(dialog.gameObject);
             }
 
-            mover.StopUpdatingPath = false;
             mover.Clear(PathfindingClear.Both);
             ToggleWindow(true, false);
         }
 
         private void ResetWindow()
         {
+            attackCost = 1;
+
             moveCost = 1;
             MoveButton.interactable = true;
             moved = false;
-            MoveButton.GetComponentInChildren<TextMeshProUGUI>().text = "Move";
+            MoveButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Move ({moveCost})";
+            AttackButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Attack ({attackCost})";
         }
 
         public void Wait()
@@ -108,9 +158,11 @@ namespace Gameplay
             if (reset) ResetWindow();
             transform.GetChild(0).gameObject.SetActive(toggle);
 
-            if (moved) MoveButton.GetComponentInChildren<TextMeshProUGUI>().text = "Rush";
+            if (moved) MoveButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Rush ({moveCost})";
+            AttackButton.GetComponentInChildren<TextMeshProUGUI>().text = $"Attack ({attackCost})";
 
             if (toggle && moveCost > turnManager.CurrentCharacter.ActionPoints()) MoveButton.interactable = false;
+            if (toggle && attackCost > turnManager.CurrentCharacter.ActionPoints()) AttackButton.interactable = false;
         }
     }
 }

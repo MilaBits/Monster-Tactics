@@ -15,6 +15,8 @@ public class CharacterMover : MonoBehaviour
     [SerializeField, InlineEditor]
     private Character target = default;
 
+    private QuadTile oldTarget;
+
     private QuadTileMap tileMap;
 
     [Space]
@@ -28,11 +30,8 @@ public class CharacterMover : MonoBehaviour
     private List<LineSegment> visibleLines = new List<LineSegment>();
     private LineSegment Arrow;
 
-    private bool moving = false;
-
     private List<QuadTile> oldPath;
-    public bool StopUpdatingPath = false;
-
+    public bool StopUpdatingPath = true;
 
     private LineSegment GetLineSegmentFromPool()
     {
@@ -61,39 +60,25 @@ public class CharacterMover : MonoBehaviour
     private void MarkPossible()
     {
         foreach (QuadTile tile in tileMap.GetTilesInRange(
-            tileMap.GetTile(target.transform.position.ToVector2IntXZ()), target.Data().move,
-            target.Data().stepLayerLimit,
-            target.Data().useRoughness))
+            tileMap.GetTile(target.transform.position.ToVector2IntXZ()), target.Data.move,
+            target.Data.stepLayerLimit,
+            target.Data.useRoughness))
         {
             tile.ToggleViableMarker(true);
         }
-    }
-
-    public QuadTile GetTarget()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, 100, LayerMask.GetMask("Viable Marker")))
-        {
-            return hit.transform.GetComponentInParent<QuadTile>();
-        }
-
-        return null;
     }
 
     private void Update()
     {
         if (StopUpdatingPath) return;
 
-        QuadTile target = GetTarget();
+        QuadTile target = QuadTileMap.GetTarget();
         if (target)
         {
             DrawPath(target);
         }
     }
 
-    private QuadTile oldTarget;
 
     private void DrawPath(QuadTile target)
     {
@@ -151,7 +136,6 @@ public class CharacterMover : MonoBehaviour
     public IEnumerator Move(List<QuadTile> path, MoveParams moveParams, MoveParams jumpParams)
     {
         target.moving = true;
-        moving = true;
         Clear(PathfindingClear.Possible);
 
         target.ChangeAnimation("Walk");
@@ -162,9 +146,9 @@ public class CharacterMover : MonoBehaviour
         }
 
         target.ChangeAnimation("Idle");
-        moving = false;
         target.moving = false;
         target.ResetFlip();
+        StopUpdatingPath = true;
     }
 
     private IEnumerator TakePathStep(Vector3 target, MoveParams moveParams, MoveParams jumpParams)
@@ -193,6 +177,7 @@ public class CharacterMover : MonoBehaviour
 
     public void ShowPossible(Character character)
     {
+        StopUpdatingPath = false;
         target = character;
         MarkPossible();
     }

@@ -12,7 +12,7 @@ namespace Characters
         private int health;
         private int actionPoints;
 
-        public CharacterData Data() => characterData;
+        public CharacterData Data => characterData;
 
         private SpriteRenderer spriteRenderer;
         private Animator animator;
@@ -29,9 +29,9 @@ namespace Characters
             flippedByDefault = spriteRenderer.flipX;
 
             animator = GetComponent<Animator>();
-            animator.runtimeAnimatorController = Data().animatorController;
+            animator.runtimeAnimatorController = Data.animatorController;
 
-            health = Data().MaxHealth;
+            health = Data.MaxHealth;
         }
 
         private void Update()
@@ -57,7 +57,7 @@ namespace Characters
         public void ResetFlip() => spriteRenderer.flipX = flippedByDefault;
 
         public void ChangeAnimation(string animation) => animator.SetTrigger(animation);
-        public void RefillActionPoints() => actionPoints = Data().MaxActionPoints;
+        public void RefillActionPoints() => actionPoints = Data.MaxActionPoints;
         public void LoseActionPoints(int amount) => actionPoints -= amount;
         public int ActionPoints() => actionPoints;
     }

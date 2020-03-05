@@ -15,6 +15,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F38C71C8-6AA6-4E29-9D4C-EA9FB7C715E1/4d/1ec94b7c/SerializeField.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/LineSegment.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F38C71C8-6AA6-4E29-9D4C-EA9FB7C715E1/90/37ca0b75/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/LabelValueField.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/TurnManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Level/QuadTileSides.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/StatsBox.cs" root0="FORCE_HIGHLIGHTING" />
@@ -24,6 +25,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F38C71C8-6AA6-4E29-9D4C-EA9FB7C715E1/3e/b34c5b4c/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ide.rider@1.1.4/Rider/Editor/RiderScriptEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/CameraController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterAttacker.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/43BB9D48-5A6C-4A02-96B4-7F7E78869238/bf/1631e946/OdinEditorWindow.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/ActionWindow.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Characters/CharacterData.cs" root0="FORCE_HIGHLIGHTING" />
@@ -51,8 +53,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assets/Scripts/Editor/TileMapEditor.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/TileMap.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/LevelEditMode.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/TileSides.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/SceneInteractingWindow.cs" />
@@ -72,7 +72,6 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/LevelData.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/LevelEditMode.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/OLD/LevelEditor.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/Extensions.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileSides.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/Character.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CharacterData.cs" />
@@ -87,21 +86,24 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/TurnList.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UI/Label Value Field.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/StatsBox.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/TurnManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharMover.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Characters/CharacterData.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogResult.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/GameUIManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/UI/ConfirmationDialog.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTile.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileMap.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/PathfindingClearType.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/UI/LineSegment.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/ActionWindow.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/MoveParams.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CameraController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Characters/CharacterData.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/TurnManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Characters/Character.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/UI/LineSegment.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CameraController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/UI/LabelValueField.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/UI/ConfirmationDialog.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/GameUIManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/Extensions.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Level/QuadTileMap.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterAttacker.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterMover.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/ActionWindow.cs" />
       </list>
     </option>
   </component>

@@ -9,17 +9,17 @@ namespace Gameplay
         private Character target;
 
         [SerializeField]
-        private ActionWindow actionWindow;
+        private ActionWindow actionWindow = default;
 
         public ActionWindow ActionWindow => actionWindow;
 
         [SerializeField]
-        private StatsBox statsBox;
+        private StatsBox statsBox = default;
 
         public StatsBox StatsBox => statsBox;
 
         [SerializeField]
-        private TurnList turnList;
+        private TurnList turnList = default;
 
         public TurnList TurnList => turnList;
 

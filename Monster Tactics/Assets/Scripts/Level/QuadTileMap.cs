@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Gameplay;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
@@ -88,7 +89,7 @@ namespace Level
                 return chainValue <= range && chainValue > 0;
             }).ToList();
         }
-
+        
         public void ResetPathfindingData()
         {
             foreach (KeyValuePair<Vector2Int, QuadTile> keyValuePair in GetTiles())
@@ -135,6 +136,19 @@ namespace Level
         {
             for (int i = transform.childCount - 1; i >= 0; i--) DestroyImmediate(transform.GetChild(i).gameObject);
             Level.Clear();
+        }
+        
+        public static QuadTile GetTarget()
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 100, LayerMask.GetMask("Viable Marker")))
+            {
+                return hit.transform.GetComponentInParent<QuadTile>();
+            }
+
+            return null;
         }
     }
 }

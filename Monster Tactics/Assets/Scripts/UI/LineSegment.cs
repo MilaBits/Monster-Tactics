@@ -4,10 +4,10 @@ using Utilities;
 public class LineSegment : MonoBehaviour
 {
     [SerializeField]
-    private Transform FromMarker;
+    private Transform FromMarker = default;
 
     [SerializeField]
-    private Transform ToMarker;
+    private Transform ToMarker = default;
 
     public void UpdateSegment(Vector3 from, Vector3 to)
     {

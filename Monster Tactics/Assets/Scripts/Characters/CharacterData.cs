@@ -16,6 +16,7 @@ namespace Characters
         public int MaxActionPoints;
 
         public int Attack;
+        public int AttackRange;
         public int defense;
         public int move;
 

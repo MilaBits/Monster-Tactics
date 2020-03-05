@@ -38,6 +38,7 @@
           <e p="Gameplay" t="Include">
             <e p="ActionWindow.cs" t="Include" />
             <e p="CameraController.cs" t="Include" />
+            <e p="CharacterAttacker.cs" t="Include" />
             <e p="CharacterMover.cs" t="Include" />
             <e p="GameUIManager.cs" t="Include" />
             <e p="MoveParams.cs" t="Include" />

@@ -8,10 +8,10 @@ namespace Gameplay
     public class CameraController : MonoBehaviour
     {
         [SerializeField]
-        private AnimationCurve SwitchTargetCurve;
+        private AnimationCurve SwitchTargetCurve= default;
 
         [SerializeField]
-        private AnimationCurve PivotCurve;
+        private AnimationCurve PivotCurve= default;
 
         [SerializeField]
         private float horizontalIncrement = 45;
@@ -28,13 +28,13 @@ namespace Gameplay
         private Vector2Int zoomLimits = new Vector2Int();
 
         private Transform pivot;
-        private Camera camera;
+        private Camera gameCamera;
         private bool pivoting;
 
         private void Awake()
         {
             pivot = transform.GetChild(0);
-            camera = GetComponentInChildren<Camera>();
+            gameCamera = GetComponentInChildren<Camera>();
         }
 
         private void Update()
@@ -66,11 +66,11 @@ namespace Gameplay
                     rotation.y -= horizontalIncrement;
                     break;
                 case CameraDirection.ZoomIn:
-                    targetZoom = (int) Mathf.Clamp(camera.orthographicSize + 1, zoomLimits.x, zoomLimits.y);
+                    targetZoom = (int) Mathf.Clamp(gameCamera.orthographicSize + 1, zoomLimits.x, zoomLimits.y);
                     StartCoroutine(ZoomSmooth(targetZoom));
                     break;
                 case CameraDirection.ZoomOut:
-                    targetZoom = (int) Mathf.Clamp(camera.orthographicSize - 1, zoomLimits.x, zoomLimits.y);
+                    targetZoom = (int) Mathf.Clamp(gameCamera.orthographicSize - 1, zoomLimits.x, zoomLimits.y);
                     StartCoroutine(ZoomSmooth(targetZoom));
                     break;
             }
@@ -122,16 +122,16 @@ namespace Gameplay
 
         public IEnumerator ZoomSmooth(int target)
         {
-            float start = camera.orthographicSize;
+            float start = gameCamera.orthographicSize;
             float duration = PivotCurve.keys.Last().time;
             for (float elapsed = 0; elapsed < duration; elapsed += Time.deltaTime)
             {
-                camera.orthographicSize =
+                gameCamera.orthographicSize =
                     Mathf.Lerp(start, target, PivotCurve.Evaluate(elapsed / duration));
                 yield return null;
             }
 
-            camera.orthographicSize = target;
+            gameCamera.orthographicSize = target;
             pivoting = false;
         }
     }

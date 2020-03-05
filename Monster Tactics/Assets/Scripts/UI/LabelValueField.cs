@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class LabelValueField : MonoBehaviour
 {
-    private TextMeshProUGUI Label;
-    private TextMeshProUGUI Value;
+    private TextMeshProUGUI Label = default;
+    private TextMeshProUGUI Value = default;
 
     public void Init(string label, string value)
     {
