@@ -29,6 +29,7 @@ MonoBehaviour:
   move: 5
   moveParams:
     duration: 0.5
+    animatorTrigger: Walk
     horizontalMovement:
       serializedVersion: 2
       m_Curve:
@@ -112,6 +113,7 @@ MonoBehaviour:
       m_RotationOrder: 4
   rushParams:
     duration: 0.25
+    animatorTrigger: Run
     horizontalMovement:
       serializedVersion: 2
       m_Curve:
@@ -195,6 +197,7 @@ MonoBehaviour:
       m_RotationOrder: 4
   jumpParams:
     duration: 0.8
+    animatorTrigger: Jump
     horizontalMovement:
       serializedVersion: 2
       m_Curve:

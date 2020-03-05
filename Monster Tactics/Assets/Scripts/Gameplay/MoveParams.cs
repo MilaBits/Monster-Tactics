@@ -8,6 +8,7 @@ namespace Gameplay
     public struct MoveParams
     {
         public float duration;
+        public string animatorTrigger;
 
         [HideLabel, SuffixLabel("Horizontal Movement", true)]
         public AnimationCurve horizontalMovement;
@@ -19,12 +20,13 @@ namespace Gameplay
         public AnimationCurve floorBounce;
 
         public MoveParams(float duration, AnimationCurve horizontalMovement,
-            AnimationCurve verticalMovement, AnimationCurve floorBounce)
+            AnimationCurve verticalMovement, AnimationCurve floorBounce, string animatorTrigger)
         {
             this.duration = duration;
             this.horizontalMovement = horizontalMovement;
             this.verticalMovement = verticalMovement;
             this.floorBounce = floorBounce;
+            this.animatorTrigger = animatorTrigger;
         }
     }
 }

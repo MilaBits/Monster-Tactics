@@ -137,7 +137,7 @@ public class CharacterMover : MonoBehaviour
         target.moving = true;
         Clear(PathfindingClear.Possible);
 
-        target.ChangeAnimation("Walk");
+        target.ChangeAnimation(moveParams.animatorTrigger);
         for (int i = 0; i < path.Count; i++)
         {
             yield return StartCoroutine(
@@ -160,7 +160,7 @@ public class CharacterMover : MonoBehaviour
 
         bool jump = start.y != target.y;
         MoveParams usedParams = jump ? jumpParams : moveParams;
-        if (jump) this.target.ChangeAnimation("Jump");
+        if (jump) this.target.ChangeAnimation(jumpParams.animatorTrigger);
 
         // Make stepped on tile bounce
         tileMap.GetTile(target.ToVector2IntXZ()).PushDown(usedParams.floorBounce);
