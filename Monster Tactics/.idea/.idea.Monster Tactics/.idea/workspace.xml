@@ -27,6 +27,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/CameraController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterAttacker.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/43BB9D48-5A6C-4A02-96B4-7F7E78869238/bf/1631e946/OdinEditorWindow.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Shaders/SwapColor UI Code.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/ActionWindow.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Characters/CharacterData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F38C71C8-6AA6-4E29-9D4C-EA9FB7C715E1/79/c6e10fb0/Color.cs" root0="SKIP_HIGHLIGHTING" />
@@ -53,8 +54,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assets/Scripts/LevelEditMode.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Level/TileSides.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/Editor/SceneInteractingWindow.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Level/TileUtilities.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/Unselectable.cs" />
@@ -104,6 +103,8 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/MoveParams.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Characters/Character.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterMover.cs" />
+        <option value="$PROJECT_DIR$/Assets/Shaders/ColorSwap.shader" />
+        <option value="$PROJECT_DIR$/Assets/Shaders/SwapColor UI Code.shader" />
       </list>
     </option>
   </component>

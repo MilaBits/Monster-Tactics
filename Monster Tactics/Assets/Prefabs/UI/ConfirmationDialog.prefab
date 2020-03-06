@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: e5605b07054ed3a44af0f75a486eb181, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -254,6 +254,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4076967329749893541}
     m_Modifications:
+    - target: {fileID: 1925014856430871530, guid: 997fbef225806514aa263285795b6710,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: e5605b07054ed3a44af0f75a486eb181, type: 2}
     - target: {fileID: 1925014856430871540, guid: 997fbef225806514aa263285795b6710,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -431,6 +436,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4076967329749893541}
     m_Modifications:
+    - target: {fileID: 1925014856430871530, guid: 997fbef225806514aa263285795b6710,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: e5605b07054ed3a44af0f75a486eb181, type: 2}
     - target: {fileID: 1925014856430871540, guid: 997fbef225806514aa263285795b6710,
         type: 3}
       propertyPath: m_LocalPosition.x
