@@ -271,8 +271,10 @@ namespace DefaultNamespace
 
         private void UpdateScript(int i)
         {
-            dialogScript = AssetDatabase.LoadAssetAtPath<DialogScript>(
-                AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(scriptDropdown.options[i].text)[0]));
+            // dialogScript = AssetDatabase.LoadAssetAtPath<DialogScript>(
+            //     AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(scriptDropdown.options[i].text)[0]));
+
+            dialogScript = AssetDatabase.LoadAssetAtPath<DialogScript>($"Assets/Data/Dialog/{scriptDropdown.options[i].text}.asset");
             DrawList();
         }
 
