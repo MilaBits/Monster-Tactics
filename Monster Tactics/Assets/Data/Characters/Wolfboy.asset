@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6aa5b096f3d86741bf5c0221278332c, type: 3}
-  m_Name: Template Character
+  m_Name: Wolfboy
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,6 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+  characterSprite: {fileID: 21300000, guid: 308d0dee4ea928e4a87b88a03c755051, type: 3}
   MaxHealth: 20
   MaxActionPoints: 6
   Attack: 3

@@ -10,6 +10,9 @@ namespace Characters
     [CreateAssetMenu(fileName = "New Character Data", menuName = "Monster Tactics/Character Data")]
     public class CharacterData : SerializedScriptableObject
     {
+        [Header("Character")]
+        public Sprite characterSprite;
+
         [Header("Stats")]
         public int MaxHealth;
 

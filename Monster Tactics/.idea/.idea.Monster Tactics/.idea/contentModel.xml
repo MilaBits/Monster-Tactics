@@ -35,6 +35,17 @@
             <e p="Character.cs" t="Include" />
             <e p="CharacterData.cs" t="Include" />
           </e>
+          <e p="Dialog" t="Include">
+            <e p="Dialog Editor" t="Include">
+              <e p="DialogEditor.cs" t="Include" />
+              <e p="DialogEventListItem.cs" t="Include" />
+            </e>
+            <e p="DialogEvent.cs" t="Include" />
+            <e p="DialogEventType.cs" t="Include" />
+            <e p="DialogPlayer.cs" t="Include" />
+            <e p="DialogScript.cs" t="Include" />
+            <e p="DialogUI.cs" t="Include" />
+          </e>
           <e p="Gameplay" t="Include">
             <e p="ActionWindow.cs" t="Include" />
             <e p="CameraController.cs" t="Include" />

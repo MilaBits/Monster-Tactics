@@ -1,0 +1,265 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92dcb6111e3565244829d6268f30069f, type: 3}
+  m_Name: Test Dialog
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 9d4a636cec7488c4db84b37bb442def6, type: 2}
+    - {fileID: 11400000, guid: 25ef83dbfcdb9f14fb53f0b90184e2d9, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: dialogEvents
+      Entry: 7
+      Data: 0|System.Collections.Generic.Queue`1[[Dialog.DialogEvent, Assembly-CSharp]],
+        System
+    - Name: 
+      Entry: 12
+      Data: 5
+    - Name: 
+      Entry: 7
+      Data: Dialog.DialogEvent, Assembly-CSharp
+    - Name: waitUntilDone
+      Entry: 5
+      Data: true
+    - Name: duration
+      Entry: 4
+      Data: 0
+    - Name: type
+      Entry: 3
+      Data: 3
+    - Name: CharacterData
+      Entry: 10
+      Data: 0
+    - Name: leftCharacter
+      Entry: 5
+      Data: true
+    - Name: text
+      Entry: 1
+      Data: Hello!
+    - Name: charInterval
+      Entry: 4
+      Data: 0.1
+    - Name: target
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: animationTrigger
+      Entry: 1
+      Data: 
+    - Name: spriteTrigger
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: Dialog.DialogEvent, Assembly-CSharp
+    - Name: waitUntilDone
+      Entry: 5
+      Data: true
+    - Name: duration
+      Entry: 4
+      Data: 1
+    - Name: type
+      Entry: 3
+      Data: 0
+    - Name: CharacterData
+      Entry: 10
+      Data: 1
+    - Name: leftCharacter
+      Entry: 5
+      Data: false
+    - Name: text
+      Entry: 1
+      Data: 
+    - Name: charInterval
+      Entry: 4
+      Data: 0.1
+    - Name: target
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: animationTrigger
+      Entry: 1
+      Data: 
+    - Name: spriteTrigger
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: Dialog.DialogEvent, Assembly-CSharp
+    - Name: waitUntilDone
+      Entry: 5
+      Data: true
+    - Name: duration
+      Entry: 4
+      Data: 0
+    - Name: type
+      Entry: 3
+      Data: 3
+    - Name: CharacterData
+      Entry: 10
+      Data: 1
+    - Name: leftCharacter
+      Entry: 5
+      Data: false
+    - Name: text
+      Entry: 1
+      Data: Woof!!
+    - Name: charInterval
+      Entry: 4
+      Data: 0.1
+    - Name: target
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: animationTrigger
+      Entry: 1
+      Data: 
+    - Name: spriteTrigger
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: Dialog.DialogEvent, Assembly-CSharp
+    - Name: waitUntilDone
+      Entry: 5
+      Data: true
+    - Name: duration
+      Entry: 4
+      Data: 0.5
+    - Name: type
+      Entry: 3
+      Data: 1
+    - Name: CharacterData
+      Entry: 10
+      Data: 1
+    - Name: leftCharacter
+      Entry: 5
+      Data: true
+    - Name: text
+      Entry: 1
+      Data: 
+    - Name: charInterval
+      Entry: 4
+      Data: 0.1
+    - Name: target
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: animationTrigger
+      Entry: 1
+      Data: 
+    - Name: spriteTrigger
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: Dialog.DialogEvent, Assembly-CSharp
+    - Name: waitUntilDone
+      Entry: 5
+      Data: true
+    - Name: duration
+      Entry: 4
+      Data: 0
+    - Name: type
+      Entry: 3
+      Data: 3
+    - Name: CharacterData
+      Entry: 10
+      Data: 0
+    - Name: leftCharacter
+      Entry: 5
+      Data: true
+    - Name: text
+      Entry: 1
+      Data: 'Aren''t you a good boy!
+
+'
+    - Name: charInterval
+      Entry: 4
+      Data: 0.1
+    - Name: target
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: animationTrigger
+      Entry: 1
+      Data: 
+    - Name: spriteTrigger
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
