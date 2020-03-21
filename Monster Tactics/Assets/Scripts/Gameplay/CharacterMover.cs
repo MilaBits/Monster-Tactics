@@ -72,7 +72,7 @@ public class CharacterMover : MonoBehaviour
     {
         if (StopUpdatingPath) return;
 
-        QuadTile target = QuadTileMap.GetTarget();
+        QuadTile target = QuadTileMap.GetTarget(LayerMask.GetMask("Viable Marker"));
         if (target)
         {
             DrawPath(target);

@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Characters;
 using Dialog;
+using Level;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using Utilities;
 
@@ -73,12 +76,37 @@ namespace DefaultNamespace
         [SerializeField, FoldoutGroup("Event UI")]
         private TMP_InputField textInput = default;
 
+        // Minimized UI
+
+        [SerializeField, FoldoutGroup("Minimized UI")]
+        private Button maximizeButton = default;
+
+        [SerializeField, FoldoutGroup("Minimized UI")]
+        private Button minimuzedPlayButton = default;
+
+        [SerializeField, FoldoutGroup("Minimized UI")]
+        private RectTransform hidableUI = default;
+
         private DialogEventListItem lastSelected;
+
+        public void ToggleHideUI() =>
+            hidableUI.anchoredPosition = hidableUI.anchoredPosition == Vector2.zero ? Vector2.up * 1000 : Vector2.zero;
 
         public void StartPlaying()
         {
             dialogPlayer.SetScript(dialogScript);
             dialogPlayer.Play();
+        }
+
+        private IEnumerator PickTarget()
+        {
+            ToggleHideUI();
+            while (!Input.GetButtonDown("Fire1")) yield return null;
+            QuadTile target = QuadTileMap.GetTarget(LayerMask.GetMask("Default"));
+            UpdateTarget(target.PositionVector2Int);
+            targetXInput.text = lastSelected.dialogEvent.target.x.ToString();
+            targetYInput.text = lastSelected.dialogEvent.target.y.ToString();
+            ToggleHideUI();
         }
 
         private void NewSelection(DialogEventListItem selection)
@@ -91,7 +119,6 @@ namespace DefaultNamespace
             durationInput.text = selection.dialogEvent.duration.ToString();
 
             toggleL.SetIsOnWithoutNotify(selection.dialogEvent.leftCharacter);
-            // toggleR.isOn = !toggleL.isOn;
 
             eventTypeDropdown.SetValueWithoutNotify((int) selection.dialogEvent.type);
             eventTypeDropdown.RefreshShownValue();
@@ -158,6 +185,7 @@ namespace DefaultNamespace
             }
         }
 
+
         private void Start()
         {
             dialogPlayer = FindObjectOfType<DialogPlayer>();
@@ -173,6 +201,9 @@ namespace DefaultNamespace
             addButton.onClick.AddListener(AddEvent);
             removeButton.onClick.AddListener(() => RemoveEvent(lastSelected.transform.GetSiblingIndex()));
             playButton.onClick.AddListener(StartPlaying);
+            minimuzedPlayButton.onClick.AddListener(StartPlaying);
+            maximizeButton.onClick.AddListener(ToggleHideUI);
+
 
             foreach (string asset in AssetDatabase.FindAssets("t:DialogScript"))
             {
@@ -213,6 +244,8 @@ namespace DefaultNamespace
             {
                 UpdateTarget(new Vector2Int(int.Parse(targetXInput.text), int.Parse(targetYInput.text)));
             });
+
+            targetPickButton.onClick.AddListener(delegate { StartCoroutine(PickTarget()); });
 
             textInput.onEndEdit.AddListener(UpdateText);
 
@@ -271,17 +304,14 @@ namespace DefaultNamespace
 
         private void UpdateScript(int i)
         {
-            // dialogScript = AssetDatabase.LoadAssetAtPath<DialogScript>(
-            //     AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets(scriptDropdown.options[i].text)[0]));
-
-            dialogScript = AssetDatabase.LoadAssetAtPath<DialogScript>($"Assets/Data/Dialog/{scriptDropdown.options[i].text}.asset");
+            dialogScript = AssetDatabase.LoadAssetAtPath<DialogScript>(
+                $"Assets/Data/Dialog/{scriptDropdown.options[i].text}.asset");
             DrawList();
         }
 
         private void UpdateScriptEvents()
         {
             List<DialogEvent> events = GetEventsFromList();
-
             dialogScript.dialogEvents = new Queue<DialogEvent>(events);
         }
 

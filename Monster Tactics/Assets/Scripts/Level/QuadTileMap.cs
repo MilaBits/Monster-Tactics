@@ -138,12 +138,12 @@ namespace Level
             Level.Clear();
         }
         
-        public static QuadTile GetTarget()
+        public static QuadTile GetTarget(LayerMask mask)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, 100, LayerMask.GetMask("Viable Marker")))
+            if (Physics.Raycast(ray, out hit, 100, mask))
             {
                 return hit.transform.GetComponentInParent<QuadTile>();
             }

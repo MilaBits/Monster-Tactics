@@ -46,7 +46,7 @@ namespace Gameplay
 
             while (!target)
             {
-                if (Input.GetButtonDown("Fire1")) target = QuadTileMap.GetTarget();
+                if (Input.GetButtonDown("Fire1")) target = QuadTileMap.GetTarget(LayerMask.GetMask("Viable Marker"));
                 yield return null;
             }
 
@@ -100,7 +100,7 @@ namespace Gameplay
             // Wait for click
             while (!target)
             {
-                if (Input.GetButtonDown("Fire1")) target = QuadTileMap.GetTarget();
+                if (Input.GetButtonDown("Fire1")) target = QuadTileMap.GetTarget(LayerMask.GetMask("Viable Marker"));
                 yield return null;
             }
 
