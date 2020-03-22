@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
+using Characters;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -12,6 +14,9 @@ namespace Dialog
 
         private DialogUI dialogUI;
 
+        private CharacterMover mover;
+
+
         public void SetScript(DialogScript script)
         {
             dialogScript = Instantiate(script);
@@ -22,6 +27,8 @@ namespace Dialog
 
         private void Start()
         {
+            mover = FindObjectOfType<CharacterMover>();
+
             dialogScript = Instantiate(dialogScript);
 
             dialogUI = FindObjectOfType<DialogUI>();
@@ -47,7 +54,7 @@ namespace Dialog
                     else
                         dialogUI.SetRightCharacter(currentEvent.CharacterData.characterSprite,
                             currentEvent.CharacterData.name);
-
+                    yield return StartCoroutine(MoveToTarget(currentEvent.CharacterData.name, currentEvent.target));
                     break;
                 case DialogEventType.Attack:
                     if (currentEvent.leftCharacter)
@@ -99,6 +106,12 @@ namespace Dialog
             {
                 yield return StartCoroutine(NextMessage());
             }
+        }
+
+        private IEnumerator MoveToTarget(string name, Vector2Int target)
+        {
+            Character targetCharacter = FindObjectsOfType<Character>().First(x => x.Data.name == name);
+            yield return mover.MoveToTarget(targetCharacter, target);
         }
     }
 }

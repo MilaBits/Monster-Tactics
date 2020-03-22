@@ -12,8 +12,8 @@ using Utilities;
 
 public class CharacterMover : MonoBehaviour
 {
-    [SerializeField, InlineEditor]
-    private Character target = default;
+    // [SerializeField, InlineEditor]
+    // private Character target = default;
 
     private QuadTile oldTarget;
 
@@ -57,7 +57,7 @@ public class CharacterMover : MonoBehaviour
     }
 
     [Button]
-    private void MarkPossible()
+    private void MarkPossible(Character target)
     {
         foreach (QuadTile tile in tileMap.GetTilesInRange(
             tileMap.GetTile(target.transform.position.ToVector2IntXZ()), target.Data.move,
@@ -132,7 +132,7 @@ public class CharacterMover : MonoBehaviour
         }
     }
 
-    public IEnumerator Move(List<QuadTile> path, MoveParams moveParams, MoveParams jumpParams)
+    public IEnumerator Move(Character target, List<QuadTile> path, MoveParams moveParams, MoveParams jumpParams)
     {
         Clear(PathfindingClear.Possible);
 
@@ -140,7 +140,7 @@ public class CharacterMover : MonoBehaviour
         for (int i = 0; i < path.Count; i++)
         {
             yield return StartCoroutine(
-                TakePathStep(path[i].PositionWithHeight, moveParams, jumpParams));
+                TakePathStep(target, path[i].PositionWithHeight, moveParams, jumpParams));
         }
 
         target.ChangeAnimation("Idle");
@@ -148,23 +148,24 @@ public class CharacterMover : MonoBehaviour
         StopUpdatingPath = true;
     }
 
-    private IEnumerator TakePathStep(Vector3 target, MoveParams moveParams, MoveParams jumpParams)
+    private IEnumerator TakePathStep(Character target, Vector3 targetPosition, MoveParams moveParams,
+        MoveParams jumpParams)
     {
-        Vector3 start = this.target.transform.position;
+        Vector3 start = target.transform.position;
 
         // flip character the right way
         Vector3 localDirection =
-            Camera.main.transform.InverseTransformDirection(this.target.transform.position - target).normalized;
-        this.target.FlipCharacter(localDirection.x < 0);
+            Camera.main.transform.InverseTransformDirection(target.transform.position - targetPosition).normalized;
+        target.FlipCharacter(localDirection.x < 0);
 
-        this.target.ChangeAnimation(moveParams.animatorTrigger);
+        target.ChangeAnimation(moveParams.animatorTrigger);
 
-        bool jump = start.y != target.y;
+        bool jump = start.y != targetPosition.y;
         MoveParams usedParams = jump ? jumpParams : moveParams;
-        if (jump) this.target.ChangeAnimation(jumpParams.animatorTrigger);
+        if (jump) target.ChangeAnimation(jumpParams.animatorTrigger);
 
         // Make stepped on tile bounce
-        tileMap.GetTile(target.ToVector2IntXZ()).PushDown(usedParams.floorBounce);
+        tileMap.GetTile(targetPosition.ToVector2IntXZ()).PushDown(usedParams.floorBounce);
 
         for (float elapsed = 0; elapsed < usedParams.duration; elapsed += Time.deltaTime)
         {
@@ -172,17 +173,26 @@ public class CharacterMover : MonoBehaviour
             float yOffset = usedParams.verticalMovement.Evaluate(progress);
             float horizontalProgress = usedParams.horizontalMovement.Evaluate(progress);
 
-            this.target.transform.position = Vector3.Lerp(start, target, horizontalProgress) + Vector3.up * yOffset;
+            target.transform.position = Vector3.Lerp(start, targetPosition, horizontalProgress) + Vector3.up * yOffset;
             yield return null;
         }
 
-        this.target.transform.position = target;
+        target.transform.position = targetPosition;
     }
 
     public void ShowPossible(Character character)
     {
         StopUpdatingPath = false;
-        target = character;
-        MarkPossible();
+        MarkPossible(character);
+    }
+
+    public IEnumerator MoveToTarget(Character character, Vector2Int target)
+    {
+        List<QuadTile> tiles = tileMap.GetTilesInRange(tileMap.GetTile(character.transform.position.ToVector2IntXZ()),
+            50,
+            character.Data.stepLayerLimit, false);
+
+        yield return StartCoroutine(Move(character, tileMap.GetTile(target).Path(), character.Data.moveParams,
+            character.Data.jumpParams));
     }
 }

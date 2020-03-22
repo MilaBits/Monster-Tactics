@@ -119,7 +119,8 @@ namespace Gameplay
                 Destroy(dialog.gameObject);
                 CharacterData data = turnManager.CurrentCharacter.Data;
                 MoveParams moveParams = moved ? data.rushParams : data.moveParams;
-                yield return StartCoroutine(mover.Move(target.Path(), moveParams, data.jumpParams));
+                yield return StartCoroutine(mover.Move(turnManager.CurrentCharacter, target.Path(), moveParams,
+                    data.jumpParams));
                 turnManager.CurrentCharacter.LoseActionPoints(moveCost);
                 moveCost++;
 
