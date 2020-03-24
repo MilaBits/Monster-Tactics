@@ -52,5 +52,8 @@ namespace Characters
         public void RefillActionPoints() => actionPoints = Data.MaxActionPoints;
         public void LoseActionPoints(int amount) => actionPoints -= amount;
         public int ActionPoints() => actionPoints;
+
+        [Button]
+        private void UpdateVisual() => GetComponentInChildren<SpriteRenderer>().sprite = characterData.characterSprite;
     }
 }

@@ -49,45 +49,45 @@ namespace Dialog
                     break;
                 case DialogEventType.Move:
                     if (currentEvent.leftCharacter)
-                        dialogUI.SetLeftCharacter(currentEvent.CharacterData.characterSprite,
+                        dialogUI.SetLeftCharacter(currentEvent.CharacterData.characterPortraitSprite,
                             currentEvent.CharacterData.name);
                     else
-                        dialogUI.SetRightCharacter(currentEvent.CharacterData.characterSprite,
+                        dialogUI.SetRightCharacter(currentEvent.CharacterData.characterPortraitSprite,
                             currentEvent.CharacterData.name);
                     yield return StartCoroutine(MoveToTarget(currentEvent.CharacterData.name, currentEvent.target));
                     break;
                 case DialogEventType.Attack:
                     if (currentEvent.leftCharacter)
-                        dialogUI.SetLeftCharacter(currentEvent.CharacterData.characterSprite,
+                        dialogUI.SetLeftCharacter(currentEvent.CharacterData.characterPortraitSprite,
                             currentEvent.CharacterData.name);
                     else
-                        dialogUI.SetRightCharacter(currentEvent.CharacterData.characterSprite,
+                        dialogUI.SetRightCharacter(currentEvent.CharacterData.characterPortraitSprite,
                             currentEvent.CharacterData.name);
 
                     break;
                 case DialogEventType.Text:
                     if (currentEvent.leftCharacter)
-                        dialogUI.SetLeftCharacter(currentEvent.CharacterData.characterSprite,
+                        dialogUI.SetLeftCharacter(currentEvent.CharacterData.characterPortraitSprite,
                             currentEvent.CharacterData.name);
                     else
-                        dialogUI.SetRightCharacter(currentEvent.CharacterData.characterSprite,
+                        dialogUI.SetRightCharacter(currentEvent.CharacterData.characterPortraitSprite,
                             currentEvent.CharacterData.name);
                     yield return StartCoroutine(dialogUI.SetDialogText(currentEvent.text, false));
                     break;
                 case DialogEventType.Anim:
                     if (currentEvent.leftCharacter)
-                        dialogUI.SetLeftCharacter(currentEvent.CharacterData.characterSprite,
+                        dialogUI.SetLeftCharacter(currentEvent.CharacterData.characterPortraitSprite,
                             currentEvent.CharacterData.name);
                     else
-                        dialogUI.SetRightCharacter(currentEvent.CharacterData.characterSprite,
+                        dialogUI.SetRightCharacter(currentEvent.CharacterData.characterPortraitSprite,
                             currentEvent.CharacterData.name);
                     break;
                 case DialogEventType.Sprite:
                     if (currentEvent.leftCharacter)
-                        dialogUI.SetLeftCharacter(currentEvent.CharacterData.characterSprite,
+                        dialogUI.SetLeftCharacter(currentEvent.CharacterData.characterPortraitSprite,
                             currentEvent.CharacterData.name);
                     else
-                        dialogUI.SetRightCharacter(currentEvent.CharacterData.characterSprite,
+                        dialogUI.SetRightCharacter(currentEvent.CharacterData.characterPortraitSprite,
                             currentEvent.CharacterData.name);
                     break;
                 default:

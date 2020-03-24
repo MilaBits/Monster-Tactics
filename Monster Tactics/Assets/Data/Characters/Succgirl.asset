@@ -21,7 +21,9 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  characterSprite: {fileID: 3808502765582730390, guid: 877dd90ae2a034e42a69fe079aeca2aa,
+  characterPortraitSprite: {fileID: 3808502765582730390, guid: 877dd90ae2a034e42a69fe079aeca2aa,
+    type: 3}
+  characterSprite: {fileID: -1998838701805991017, guid: d26ae6fd1704f6e4facd611fbcc2863a,
     type: 3}
   MaxHealth: 20
   MaxActionPoints: 6
@@ -329,4 +331,4 @@ MonoBehaviour:
   startPriority: 1
   stepLayerLimit: 0.5
   useRoughness: 1
-  animatorController: {fileID: 9100000, guid: 6321eca75c80615498f4d629db307e96, type: 2}
+  animatorController: {fileID: 9100000, guid: 681555b171846a44283fd57847ac032b, type: 2}

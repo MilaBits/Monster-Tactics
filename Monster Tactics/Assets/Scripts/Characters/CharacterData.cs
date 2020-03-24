@@ -11,6 +11,7 @@ namespace Characters
     public class CharacterData : SerializedScriptableObject
     {
         [Header("Character")]
+        public Sprite characterPortraitSprite;
         public Sprite characterSprite;
 
         [Header("Stats")]

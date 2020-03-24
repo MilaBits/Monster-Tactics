@@ -92,11 +92,9 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/UI/LineSegment.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UI/LabelValueField.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UI/ConfirmationDialog.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/GameUIManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterAttacker.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CameraController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/MoveParams.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Characters/Character.cs" />
         <option value="$PROJECT_DIR$/Assets/Shaders/ColorSwap.shader" />
         <option value="$PROJECT_DIR$/Assets/Shaders/SwapColor UI Code.shader" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Dialog/TextDialogEvent.cs" />
@@ -107,7 +105,6 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Dialog/DialogScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Dialog/Dialog Editor/DialogEventListItem.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Utilities/Extensions.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Characters/CharacterData.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Dialog/DialogEvent.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Dialog/DialogEventType.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Dialog/DialogUI.cs" />
@@ -116,6 +113,9 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Dialog/DialogPlayer.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/CharacterMover.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/ActionWindow.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Characters/CharacterData.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Characters/Character.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Gameplay/GameUIManager.cs" />
       </list>
     </option>
   </component>
@@ -145,10 +145,10 @@
       <option name="pid" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="23876">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="23876" />
+      <option name="pid" />
       <method v="2" />
     </configuration>
   </component>
